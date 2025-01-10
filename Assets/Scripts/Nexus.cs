@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Nexus : MonoBehaviour
 {
-    public float health;
+    [Header("Main Settings")]
+    public int health;
 
     private void Awake()
     {

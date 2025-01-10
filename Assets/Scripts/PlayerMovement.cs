@@ -5,16 +5,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Main Settings")]
+    public float attackSpeed;
     public float moveSpeed;
-    public Vector2 inputVec;
-    public Scanner scanner;
+
+    [Header("Objects")]
 
     Rigidbody2D rb;
     Collider2D coll;
+    private Vector2 inputVec;
 
     private void Awake()
     {
-        scanner = GetComponent<Scanner>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
     }

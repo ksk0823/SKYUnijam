@@ -2,52 +2,69 @@ using UnityEngine;
  
 public class NeutralUnit : MonoBehaviour
 {
-    public GameObject neutralPrefab;
-    public float speed = 3f;
+    [Header("Main Settings")]
+    public int health = 8;
+    public float attackSpeed;
+    public float moveSpeed = 3f;
 
-    private Transform target;
+    [Header("Objects")]
+    public GameObject neutralPrefab;
+    public Transform target;
+
     private Rigidbody2D rb;
     private Collider2D coll;
-    private bool isMove;
+    private string myTag;
 
     private void Awake()
     {
-        isMove = true;
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+        myTag = gameObject.tag;
+        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     void Update()
     {
-        if (target != null && isMove)
+        if (target != null)
         {
             Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
+            transform.position += direction * moveSpeed * Time.deltaTime;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = Vector2.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            coll.isTrigger = false;
-            Split();
-            Destroy(gameObject); // 원래 오브젝트 삭제
-        }
-        else if (collision.CompareTag("Enemy"))
-        {
-            // 전투 구현해야 함
-        }
+        //if (collision.CompareTag("Player"))
+        //{
+        //    coll.isTrigger = false;
+        //    Split();
+        //    Destroy(gameObject); // 원래 오브젝트 삭제
+        //}
+        //else if (collision.CompareTag("Enemy"))
+        //{
+        //    // 전투 구현해야 함
+        //}
     }
 
-    private void Split()
+    public void Split()
     {
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < 2; i++)
         {
             GameObject newObject = Instantiate(neutralPrefab, transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
             Collider2D newColl = newObject.GetComponent<Collider2D>();
+            Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
+
             newColl.isTrigger = false;
+            newRb.isKinematic = false;
+            newObject.layer = LayerMask.NameToLayer("Active Unit");
+            newObject.tag = "Un Fixed";
+
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.SetTarget(FindClosestEnemy());
         }
