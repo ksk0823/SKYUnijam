@@ -5,9 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Main Settings")]
     public float moveSpeed;
-    public Vector2 inputVec;
-    public Scanner scanner;
+
+    [SerializeField] public Vector2 inputVec;
+    [SerializeField] public Scanner scanner;
 
     Rigidbody2D rb;
     Collider2D coll;

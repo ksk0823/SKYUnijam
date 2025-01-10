@@ -2,10 +2,11 @@ using UnityEngine;
  
 public class NeutralUnit : MonoBehaviour
 {
+    [Header("Main Settings")]
     public GameObject neutralPrefab;
     public float speed = 3f;
+    public Transform target;
 
-    private Transform target;
     private Rigidbody2D rb;
     private Collider2D coll;
     private bool isMove;
@@ -24,6 +25,11 @@ public class NeutralUnit : MonoBehaviour
             Vector3 direction = (target.position - transform.position).normalized;
             transform.position += direction * speed * Time.deltaTime;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = Vector2.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,6 +54,7 @@ public class NeutralUnit : MonoBehaviour
             GameObject newObject = Instantiate(neutralPrefab, transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
             Collider2D newColl = newObject.GetComponent<Collider2D>();
             newColl.isTrigger = false;
+            newObject.layer = LayerMask.NameToLayer("Active Unit");
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.SetTarget(FindClosestEnemy());
         }

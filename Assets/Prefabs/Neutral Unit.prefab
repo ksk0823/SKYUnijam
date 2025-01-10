@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3945886016560738410}
   - component: {fileID: 7183785555158097915}
   - component: {fileID: 7030367389591533038}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Neutral Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,5 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57bd460191c6a349aa41a960df5b7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neutralPrefab: {fileID: 0}
-  speed: 3
+  neutralPrefab: {fileID: 3411832182620486813}
+  speed: 1
+  target: {fileID: 0}

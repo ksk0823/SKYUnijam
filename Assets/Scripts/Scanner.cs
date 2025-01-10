@@ -5,9 +5,10 @@ using UnityEngine;
 public class Scanner : MonoBehaviour
 {
     public float scanRange;
-    public LayerMask targetLayer;
-    public RaycastHit2D[] targets;
-    public Transform nearestTarget;
+
+    [SerializeField] public LayerMask targetLayer;
+    [SerializeField] public RaycastHit2D[] targets;
+    [SerializeField] public Transform nearestTarget;
 
     private void FixedUpdate()
     {
