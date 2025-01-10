@@ -37,7 +37,7 @@ public class Scanner : MonoBehaviour
             }
         }
 
-        Debug.Log(result);
+        //Debug.Log(result);
         return result;
     }
 }

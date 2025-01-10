@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Nexus Trigger
+  - Unit Trigger
   layers:
   - Default
   - TransparentFX

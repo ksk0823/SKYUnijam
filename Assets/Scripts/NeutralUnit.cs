@@ -4,7 +4,8 @@ public class NeutralUnit : MonoBehaviour
 {
     [Header("Main Settings")]
     public int health = 8;
-    public float speed = 3f;
+    public float attackSpeed;
+    public float moveSpeed = 3f;
 
     [Header("Objects")]
     public GameObject neutralPrefab;
@@ -26,7 +27,7 @@ public class NeutralUnit : MonoBehaviour
         if (target != null && isMove)
         {
             Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
+            transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
 
@@ -37,27 +38,29 @@ public class NeutralUnit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            coll.isTrigger = false;
-            Split();
-            Destroy(gameObject); // 원래 오브젝트 삭제
-        }
-        else if (collision.CompareTag("Enemy"))
-        {
-            // 전투 구현해야 함
-        }
+        //if (collision.CompareTag("Player"))
+        //{
+        //    coll.isTrigger = false;
+        //    Split();
+        //    Destroy(gameObject); // 원래 오브젝트 삭제
+        //}
+        //else if (collision.CompareTag("Enemy"))
+        //{
+        //    // 전투 구현해야 함
+        //}
     }
 
-    private void Split()
+    public void Split()
     {
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < 2; i++)
         {
             GameObject newObject = Instantiate(neutralPrefab, transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
             Collider2D newColl = newObject.GetComponent<Collider2D>();
+
             newColl.isTrigger = false;
             newObject.layer = LayerMask.NameToLayer("Active Unit");
+
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.SetTarget(FindClosestEnemy());
         }

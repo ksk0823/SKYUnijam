@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Main Settings")]
+    public float attackSpeed;
     public float moveSpeed;
 
     [Header("Objects")]
