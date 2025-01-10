@@ -99,6 +99,24 @@ public class ObjectTrigger : MonoBehaviour
         {
             isPlayerNearby = true;
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            Battle(enemy);
+        }
+    }
+
+    void Battle(Enemy enemy)
+    {
+        NeutralUnit parent = transform.parent.gameObject.GetComponent<NeutralUnit>();
+        if (parent.health > enemy.health)
+        {
+            Destroy(enemy.gameObject);
+        }
+        else
+        {
+            Destroy(parent.gameObject);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)

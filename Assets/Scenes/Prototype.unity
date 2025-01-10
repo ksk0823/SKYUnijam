@@ -1615,6 +1615,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1754334065}
     m_Modifications:
+    - target: {fileID: 907271648869399033, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2119641701098043559, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.25
@@ -1657,7 +1661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7783210354899068931, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_Name
-      value: Enemy Unit (2)
+      value: Enemy 3
       objectReference: {fileID: 0}
     - target: {fileID: 7783210354899068931, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_Layer
@@ -1760,6 +1764,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1754334065}
     m_Modifications:
+    - target: {fileID: 907271648869399033, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
+      propertyPath: health
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2119641701098043559, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.4585733
@@ -1802,11 +1810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7783210354899068931, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_Name
-      value: Enemy Unit (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7783210354899068931, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
-      propertyPath: m_Layer
-      value: 7
+      value: Enemy 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3096,6 +3100,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1754334065}
     m_Modifications:
+    - target: {fileID: 907271648869399033, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
+      propertyPath: health
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2119641701098043559, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.848573
@@ -3138,11 +3146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7783210354899068931, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
       propertyPath: m_Name
-      value: Enemy Unit
-      objectReference: {fileID: 0}
-    - target: {fileID: 7783210354899068931, guid: 153ba1eb2845950419993685a512d4cd, type: 3}
-      propertyPath: m_Layer
-      value: 7
+      value: Enemy 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
