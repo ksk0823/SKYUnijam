@@ -1,6 +1,7 @@
 using UnityEngine;
- 
-public class NeutralUnit : MonoBehaviour
+using Photon.Pun;
+
+public class NeutralUnit : UnitObject
 {
     [Header("Main Settings")]
     public int health = 8;
@@ -15,10 +16,19 @@ public class NeutralUnit : MonoBehaviour
     private Collider2D coll;
     private string myTag;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+        if (!pv.IsMine)
+        {
+            unitGroup = EUnitGroup.Enemy;
+        } else
+        {
+            unitGroup = EUnitGroup.Allay;
+        }
+        
         myTag = gameObject.tag;
         rb.bodyType = RigidbodyType2D.Kinematic;
     }

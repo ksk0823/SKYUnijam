@@ -273,7 +273,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
-        PhotonNetwork.LoadLevel("TestCombat");
+        PhotonNetwork.LoadLevel("MultiCombat");
         
     }
 
