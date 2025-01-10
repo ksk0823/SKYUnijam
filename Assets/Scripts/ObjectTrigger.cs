@@ -18,10 +18,19 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.Space))
         {
-            if (myTag == "Nexus Trigger")
-                InteractNexus();
-            else if (myTag == "Unit Trigger")
-                InteractUnit();
+            HandleInteraction();
+        }
+    }
+
+    private void HandleInteraction()
+    {
+        if (myTag == "Nexus Trigger")
+        {
+            InteractNexus();
+        }
+        else if (myTag == "Unit Trigger")
+        {
+            InteractUnit();
         }
     }
 

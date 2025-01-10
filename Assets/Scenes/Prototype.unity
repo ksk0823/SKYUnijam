@@ -380,7 +380,6 @@ GameObject:
   - component: {fileID: 539580785}
   - component: {fileID: 539580789}
   - component: {fileID: 539580787}
-  - component: {fileID: 539580788}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -531,24 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSpeed: 0
   moveSpeed: 5
-  scanner: {fileID: 539580788}
---- !u!114 &539580788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539580782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d95ea187dad034ca6ca0425007e9cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scanRange: 20
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  nearestTarget: {fileID: 0}
+  scanner: {fileID: 0}
 --- !u!114 &539580789
 MonoBehaviour:
   m_ObjectHideFlags: 0

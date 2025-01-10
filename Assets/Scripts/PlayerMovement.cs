@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
 
     [Header("Objects")]
-    public Scanner scanner;
 
     Rigidbody2D rb;
     Collider2D coll;
@@ -18,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        scanner = GetComponent<Scanner>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
     }
