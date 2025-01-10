@@ -39,16 +39,7 @@ public class NeutralUnit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.CompareTag("Player"))
-        //{
-        //    coll.isTrigger = false;
-        //    Split();
-        //    Destroy(gameObject); // 원래 오브젝트 삭제
-        //}
-        //else if (collision.CompareTag("Enemy"))
-        //{
-        //    // 전투 구현해야 함
-        //}
+        
     }
 
     public void Split()

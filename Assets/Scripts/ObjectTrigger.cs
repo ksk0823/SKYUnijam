@@ -4,21 +4,51 @@ using UnityEngine;
 
 public class ObjectTrigger : MonoBehaviour
 {
+    [Header("Objects")]
     public NeutralUnit unitPrefab;
 
     private bool isPlayerNearby = false;
     private string myTag;
+    private float holdTime = 0f;
+    private float interactionTime;
 
     private void Awake()
     {
         myTag = gameObject.tag;
+
+        switch (myTag)
+        {
+            case "Unit Trigger":
+                interactionTime = 3f;
+                break;
+
+            case "Nexus Trigger":
+                interactionTime = 5f;
+                break;
+
+            default:
+                interactionTime = 5f;
+                break;
+        }
     }
 
     void Update()
     {
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.Space))
+        if (isPlayerNearby)
         {
-            HandleInteraction();
+            if (Input.GetKey(KeyCode.Space))
+            {
+                holdTime += Time.deltaTime;
+
+                if (holdTime >= interactionTime)
+                {
+                    HandleInteraction();
+                }
+            }
+            else
+            {
+                holdTime = 0f;
+            }
         }
     }
 
@@ -28,6 +58,7 @@ public class ObjectTrigger : MonoBehaviour
         {
             InteractNexus();
         }
+
         else if (myTag == "Unit Trigger")
         {
             InteractUnit();
@@ -44,6 +75,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         Debug.Log("유닛 상호작용 실행");
         // 플레이어 유닛 상호작용 로직 추가
+
         unitPrefab.Split();
         Destroy(transform.parent.gameObject);
     }
