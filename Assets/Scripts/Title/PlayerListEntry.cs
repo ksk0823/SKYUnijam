@@ -11,10 +11,13 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
     [Header("UI References")]
     public TMP_Text PlayerNameText;
     
-    public Button ReadyButton;
-    public TMP_Text ReadyStateText;
+    [Header("Player UI")]
+    public Button ReadyButton;  // PlayerInfo에만 있음
     
-    public Button CharacterSelectButton;
+    [Header("Enemy UI")]
+    public TMP_Text ReadyStateText;  // EnemyInfo에만 있음
+    
+    public GameObject CharacterSelectPanel;
     public Image CharacterImage;
     public Sprite[] CharacterSprites;
     
@@ -36,69 +39,29 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        // 자신의 PlayerInfo가 아닌 경우 컨트롤 비활성화
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
-            ReadyButton.gameObject.SetActive(false);
-            CharacterSelectButton.gameObject.SetActive(false);
+            if (ReadyButton != null)
+                ReadyButton.gameObject.SetActive(false);
+            if (CharacterSelectPanel != null)
+                CharacterSelectPanel.SetActive(false);
         }
         else
         {
-            // 초기 속성만 설정
-        Hashtable initialProps = new Hashtable() {
-            {"IsReady", isPlayerReady}, 
-            {"CharacterIndex", characterIndex}
-        };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
-        PhotonNetwork.LocalPlayer.SetScore(0);
-            /*
+            if (ReadyButton != null)
+                ReadyButton.gameObject.SetActive(true);
+            if (CharacterSelectPanel != null)
+                CharacterSelectPanel.SetActive(!isPlayerReady); // Ready 상태에 따라 설정
+            
             // 초기 속성 설정
-            Hashtable initialProps = new Hashtable() {{"IsReady", isPlayerReady}, 
-                {"CharacterIndex", characterIndex}};
+            Hashtable initialProps = new Hashtable() {
+                {"IsReady", isPlayerReady}, 
+                {"CharacterIndex", characterIndex}
+            };
             PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
             PhotonNetwork.LocalPlayer.SetScore(0);
-
-            // Ready 버튼 리스너 설정
-            ReadyButton.onClick.AddListener(() =>
-            {
-                isPlayerReady = !isPlayerReady;
-                SetPlayerReady(isPlayerReady);
-
-                Hashtable props = new Hashtable() {{"IsReady", isPlayerReady}, 
-                    {"CharacterIndex", characterIndex}};
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    FindObjectOfType<TitleManager>().LocalPlayerPropertiesUpdated();
-                }
-            });
-            
-            // 캐릭터 선택 버튼 리스너 설정
-            CharacterSelectButton.onClick.AddListener(() =>
-            {
-                if (characterIndex < 2)
-                {
-                    characterIndex++;
-                }
-                else
-                {
-                    characterIndex = 0;
-                }
-                
-                SetPlayerCharacter(characterIndex);
-
-                Hashtable props = new Hashtable() {{"IsReady", isPlayerReady}, 
-                    {"CharacterIndex", characterIndex}};
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    FindObjectOfType<TitleManager>().LocalPlayerPropertiesUpdated();
-                }
-            });
-            */
         }
-        
     }
 
     #endregion
@@ -108,6 +71,26 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
         ownerId = playerId;
         PlayerNameText.text = playerName;
         characterIndex = 0;
+        isPlayerReady = false; // 초기화 시 Ready 상태를 false로 설정
+        
+        // UI 컨트롤 상태 업데이트
+        if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
+        {
+            if (ReadyButton != null)
+                ReadyButton.gameObject.SetActive(false);
+            if (CharacterSelectPanel != null)
+                CharacterSelectPanel.SetActive(false);
+        }
+        else
+        {
+            if (ReadyButton != null)
+            {
+                ReadyButton.gameObject.SetActive(true);
+                ReadyButton.GetComponentInChildren<TMP_Text>().text = "Ready?";
+            }
+            if (CharacterSelectPanel != null)
+                CharacterSelectPanel.SetActive(true); // 항상 true로 시작
+        }
     }
     
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
@@ -149,12 +132,12 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnSelectButtonClicked()
+    public void OnSelectButtonClicked(int index)
     {
         Debug.Log("Select Button Clicked");
         // Select 버튼 클릭 시 동작
-        characterIndex = (characterIndex + 1) % 3;
-    Debug.Log("Character Index: " + characterIndex);
+        characterIndex = index;
+        Debug.Log("Character Index: " + characterIndex);
                 
         SetPlayerCharacter(characterIndex);
 
@@ -170,15 +153,25 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
     
     public void SetPlayerReady(bool playerReady)
     {
-        ReadyButton.GetComponentInChildren<TMP_Text>().text = playerReady ? "Ready!" : "Ready?";
-        ReadyStateText.text = playerReady ? "Ready" : "Not Ready";
-        if (playerReady==true && PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+        isPlayerReady = playerReady;
+        
+        // PlayerInfo의 경우 (ReadyButton이 있는 경우)
+        if (ReadyButton != null)
         {
-            CharacterSelectButton.gameObject.SetActive(false);
+            ReadyButton.GetComponentInChildren<TMP_Text>().text = playerReady ? "Ready!" : "Ready?";
         }
-        else if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+        
+        // EnemyInfo의 경우 (ReadyStateText가 있는 경우)
+        if (ReadyStateText != null)
         {
-            CharacterSelectButton.gameObject.SetActive(true);
+            ReadyStateText.text = playerReady ? "Ready" : "Not Ready";
+        }
+            
+        // 자신의 PlayerInfo인 경우에만 CharacterSelectPanel 상태를 변경
+        if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+        {
+            if (CharacterSelectPanel != null)
+                CharacterSelectPanel.SetActive(!playerReady);
         }
     }
     

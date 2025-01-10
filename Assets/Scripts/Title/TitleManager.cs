@@ -16,26 +16,17 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 /// </summary>
 public class TitleManager : MonoBehaviourPunCallbacks
 {
+    [Header("Title UI")]
+    public GameObject TitlePanel;
+
     [Header("Login UI")]
     public GameObject LoginPanel;
     public TMP_InputField PlayerNameInput;
     
-    [Header("Selection Panel")]
-    public GameObject SelectionPanel;
-
-    [Header("Create Room Panel")]
-    public GameObject CreateRoomPanel;
-    public TMP_InputField CreateRoomCodeInputField;
-    
-    [Header("Enter Room Panel")]
-    public GameObject EnterRoomPanel;
-    public TMP_InputField EnterRoomCodeInputField;
-
-    [Header("Join Random Room Panel")]
-    public GameObject JoinRandomRoomPanel;
-    
     [Header("Inside Room Panel")]
     public GameObject InsideRoomPanel;
+    public GameObject PlayerInfo;
+    public GameObject EnemyInfo;
     public GameObject PlayerListPanel;
 
     public Button StartGameButton;
@@ -61,36 +52,18 @@ public class TitleManager : MonoBehaviourPunCallbacks
     #region Photon Callbacks
     public override void OnConnectedToMaster()
     {
-        //this.SetActivePanel(SelectionPanel.name);
         PhotonNetwork.JoinRandomRoom();
-    }
-    
-    public override void OnJoinedLobby()
-    {
-        PhotonNetwork.JoinLobby();
-        SetActivePanel(SelectionPanel.name);
     }
     
     public override void OnCreatedRoom()
     {
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("IsTutorial") &&
-            (bool)PhotonNetwork.CurrentRoom.CustomProperties["IsTutorial"])
-        {
-            Debug.Log("Tutorial Room created. Loading tutorial scene...");
-            // 튜토리얼 씬으로 이동
-            PhotonNetwork.LoadLevel("TutorialScene");
-        }
-        else
-        {
-            Debug.Log("Game Room created. Waiting for players...");
-            // 일반 게임 대기 로직 추가
-        }
+        Debug.Log("Game Room created. Waiting for players...");
     }
     
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.LogError("Room creation failed: " + message);
-        SetActivePanel(SelectionPanel.name);
+        SetActivePanel(TitlePanel.name);
     }
     
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -117,22 +90,33 @@ public class TitleManager : MonoBehaviourPunCallbacks
         {
             playerListEntries = new Dictionary<int, GameObject>();
         }
-        
+
+        // 자신의 정보는 항상 PlayerInfo에 설정
+        PlayerInfo.GetComponent<PlayerListEntry>().Initialize(PhotonNetwork.LocalPlayer.ActorNumber, PhotonNetwork.LocalPlayer.NickName);
+        playerListEntries.Add(PhotonNetwork.LocalPlayer.ActorNumber, PlayerInfo);
+
+        // 이미 방에 다른 플레이어가 있다면 EnemyInfo 설정
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            GameObject entry = Instantiate(PlayerListEntryPrefab);
-            entry.transform.SetParent(PlayerListPanel.transform);
-            entry.transform.localScale = Vector3.one;
-            PlayerListEntry playerEntry = entry.GetComponent<PlayerListEntry>();
-            playerEntry.Initialize(p.ActorNumber, p.NickName);
-            
-            object isPlayerReady;
-            if (p.CustomProperties.TryGetValue("IsReady", out isPlayerReady))
+            if (p.ActorNumber != PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool) isPlayerReady);
+                EnemyInfo.GetComponent<PlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
+                playerListEntries.Add(p.ActorNumber, EnemyInfo);
+                
+                // 기존 플레이어의 Ready 상태와 캐릭터 정보도 가져옴
+                object isPlayerReady;
+                if (p.CustomProperties.TryGetValue("IsReady", out isPlayerReady))
+                {
+                    EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerReady((bool)isPlayerReady);
+                }
+                
+                object characterIndex;
+                if (p.CustomProperties.TryGetValue("CharacterIndex", out characterIndex))
+                {
+                    EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerCharacter((int)characterIndex);
+                }
+                break;
             }
-            
-            playerListEntries.Add(p.ActorNumber, entry);
         }
         
         StartGameButton.gameObject.SetActive(CheckPlayersReady());
@@ -141,40 +125,39 @@ public class TitleManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable
         {
             { "IsReady", false },
-                {"CharacterIndex", 0}}; // 기본값으로 false로 설정
+            { "CharacterIndex", 0 }
+        };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
     
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        GameObject entry = Instantiate(PlayerListEntryPrefab);
-        entry.transform.SetParent(PlayerListPanel.transform);
-        entry.transform.localScale = Vector3.one;
-        entry.GetComponent<PlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
+        if (newPlayer.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber) return;
         
-        playerListEntries.Add(newPlayer.ActorNumber, entry);
+        EnemyInfo.GetComponent<PlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
+        playerListEntries.Add(newPlayer.ActorNumber, EnemyInfo);
         
         StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
     
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
+        EnemyInfo.GetComponent<PlayerListEntry>().Initialize(0, "Waiting...");
+        EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerReady(false);
+        EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerCharacter(0);
+        
         playerListEntries.Remove(otherPlayer.ActorNumber);
-
         StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
     
     public override void OnLeftRoom()
     {
-        SetActivePanel(SelectionPanel.name);
+        SetActivePanel(TitlePanel.name);
 
-        foreach (GameObject entry in playerListEntries.Values)
+        if (playerListEntries != null)
         {
-            Destroy(entry.gameObject);
+            playerListEntries.Clear();
         }
-
-        playerListEntries.Clear();
         playerListEntries = null;
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -215,15 +198,55 @@ public class TitleManager : MonoBehaviourPunCallbacks
     #endregion
     
     #region UI CallBacks
+
+    public void OnTitleStartButtonClicked()
+    {
+        SetActivePanel(LoginPanel.name);
+    }
     
     public void OnBackButtonClicked()
     {
-        
-        if (PhotonNetwork.InLobby)
+        if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.LeaveLobby();
+            // 방에 있다면 방을 나갑니다
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+            // 로비에 있다면 로비를 나갑니다
+            if (PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.LeaveLobby();
+            }
+            // 서버와의 연결을 완전히 끊습니다
+            PhotonNetwork.Disconnect();
         }
-        SetActivePanel(SelectionPanel.name);
+        
+        // PlayerInfo와 EnemyInfo 초기화
+        if (PlayerInfo != null)
+        {
+            PlayerInfo.GetComponent<PlayerListEntry>().Initialize(0, "");
+            PlayerInfo.GetComponent<PlayerListEntry>().SetPlayerReady(false);
+            PlayerInfo.GetComponent<PlayerListEntry>().SetPlayerCharacter(0);
+        }
+        
+        if (EnemyInfo != null)
+        {
+            EnemyInfo.GetComponent<PlayerListEntry>().Initialize(0, "Waiting...");
+            EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerReady(false);
+            EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerCharacter(0);
+        }
+        
+        // 플레이어 목록만 초기화
+        if (playerListEntries != null)
+        {
+            playerListEntries.Clear();
+        }
+        
+        // 입력 필드를 초기화합니다
+        PlayerNameInput.text = "";
+        
+        SetActivePanel(TitlePanel.name);
     }
     
     public void OnLoginButtonClicked()
@@ -241,42 +264,6 @@ public class TitleManager : MonoBehaviourPunCallbacks
         }
     }
     
-    public void OnCreateRoomButtonClicked()
-    {
-        string roomCode = CreateRoomCodeInputField.text;
-        if (!string.IsNullOrEmpty(roomCode))
-        {
-            RoomOptions options = new RoomOptions();
-            options.MaxPlayers = 2; // 2인 멀티플레이로 설정
-            PhotonNetwork.CreateRoom(roomCode, options, null);
-        }
-        else
-        {
-            Debug.LogError("Room Code is invalid.");
-        }
-    }
-    
-    public void OnEnterRoomButtonClicked()
-    {
-        string roomCode = EnterRoomCodeInputField.text;
-        if (!string.IsNullOrEmpty(roomCode))
-        {
-            PhotonNetwork.JoinRoom(roomCode);
-        }
-        else
-        {
-            Debug.LogError("Room Code is invalid.");
-        }
-    }
-    
-    public void OnJoinRandomRoomButtonClicked()
-    {
-        SetActivePanel(JoinRandomRoomPanel.name);
-        PhotonNetwork.JoinRandomRoom();
-    }
-    
-    
-    
     public void OnLeaveGameButtonClicked()
     {
         PhotonNetwork.LeaveRoom();
@@ -286,7 +273,6 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
-        //SceneManager.Load(SceneType.Combat);
         PhotonNetwork.LoadLevel("TestCombat");
         
     }
@@ -294,13 +280,21 @@ public class TitleManager : MonoBehaviourPunCallbacks
     
 
     #endregion
-    
+
+
     private bool CheckPlayersReady()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        // 플레이어가 혼자면 시작 불가능
+        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
         {
             return false;
         }
+
+/*
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return false;
+        }*/
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -324,11 +318,8 @@ public class TitleManager : MonoBehaviourPunCallbacks
     public void SetActivePanel(string activePanel)
     {
         playSound(clickSound);
+        TitlePanel.SetActive(activePanel.Equals(TitlePanel.name));
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-        SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-        CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
-        EnterRoomPanel.SetActive(activePanel.Equals(EnterRoomPanel.name));
-        JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
     }
     
@@ -351,5 +342,30 @@ public class TitleManager : MonoBehaviourPunCallbacks
         #endif
     }
 
-    
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("서버와의 연결이 끊어졌습니다: " + cause.ToString());
+        
+        // PlayerInfo와 EnemyInfo 초기화
+        if (PlayerInfo != null)
+        {
+            PlayerInfo.GetComponent<PlayerListEntry>().Initialize(0, "");
+            PlayerInfo.GetComponent<PlayerListEntry>().SetPlayerReady(false);
+            PlayerInfo.GetComponent<PlayerListEntry>().SetPlayerCharacter(0);
+        }
+        
+        if (EnemyInfo != null)
+        {
+            EnemyInfo.GetComponent<PlayerListEntry>().Initialize(0, "Waiting...");
+            EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerReady(false);
+            EnemyInfo.GetComponent<PlayerListEntry>().SetPlayerCharacter(0);
+        }
+        
+        SetActivePanel(TitlePanel.name);
+        
+        if (playerListEntries != null)
+        {
+            playerListEntries.Clear();
+        }
+    }
 }
