@@ -290,11 +290,19 @@ public class TitleManager : MonoBehaviourPunCallbacks
             return false;
         }
 
-/*
         if (!PhotonNetwork.IsMasterClient)
         {
             return false;
-        }*/
+        }
+
+        object isLocalPlayerReady;
+        if(PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("IsReady", out isLocalPlayerReady))
+        {
+            if(!(bool)isLocalPlayerReady)
+            {
+                return false;
+            }
+        }
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
