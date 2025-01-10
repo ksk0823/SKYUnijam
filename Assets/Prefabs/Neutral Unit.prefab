@@ -246,6 +246,5 @@ MonoBehaviour:
   health: 8
   attackSpeed: 0
   moveSpeed: 1
-  neutralPrefab: {fileID: 3411832182620486813}
+  neutralPrefab: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
   target: {fileID: 0}
-  _objectTrigger: {fileID: 2847498956555154540}
