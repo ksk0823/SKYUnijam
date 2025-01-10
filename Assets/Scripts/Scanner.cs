@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
+    [Header("Main Settings")]
     public float scanRange;
 
-    [SerializeField] public LayerMask targetLayer;
-    [SerializeField] public RaycastHit2D[] targets;
-    [SerializeField] public Transform nearestTarget;
+    [Header("Objects")]
+    public LayerMask targetLayer;
+    public RaycastHit2D[] targets;
+    public Transform nearestTarget;
 
     private void FixedUpdate()
     {

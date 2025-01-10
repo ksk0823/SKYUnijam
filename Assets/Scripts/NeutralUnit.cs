@@ -3,8 +3,11 @@ using UnityEngine;
 public class NeutralUnit : MonoBehaviour
 {
     [Header("Main Settings")]
-    public GameObject neutralPrefab;
+    public int health = 8;
     public float speed = 3f;
+
+    [Header("Objects")]
+    public GameObject neutralPrefab;
     public Transform target;
 
     private Rigidbody2D rb;

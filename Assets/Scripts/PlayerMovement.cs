@@ -8,11 +8,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Main Settings")]
     public float moveSpeed;
 
-    [SerializeField] public Vector2 inputVec;
-    [SerializeField] public Scanner scanner;
+    [Header("Objects")]
+    public Scanner scanner;
 
     Rigidbody2D rb;
     Collider2D coll;
+    private Vector2 inputVec;
 
     private void Awake()
     {
