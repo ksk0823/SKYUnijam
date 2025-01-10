@@ -287,33 +287,10 @@ public class TitleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
         //SceneManager.Load(SceneType.Combat);
-        PhotonNetwork.LoadLevel("CombatScene");
+        PhotonNetwork.LoadLevel("TestCombat");
         
     }
 
-    public void OnTutorialButtonClicked()
-    {
-        // 튜토리얼용 방 옵션 설정
-        RoomOptions roomOptions = new RoomOptions
-        {
-            MaxPlayers = 1,  // 혼자만 입장
-            IsVisible = false,  // 다른 플레이어에게 보이지 않게...
-            IsOpen = true       // 방 활성화
-        };
-
-        // 튜토리얼 방임을 표시하는 CustomProperty 추가
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable
-        {
-            { "IsTutorial", true }
-        };
-
-        // CustomProperty를 검색 가능하도록 설정
-        roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsTutorial" };
-
-        // 튜토리얼 방 이름은 "TutorialRoom"
-        PhotonNetwork.CreateRoom("TutorialRoom_" + UnityEngine.Random.Range(1000, 9999), roomOptions, null);
-        
-    }
     
 
     #endregion

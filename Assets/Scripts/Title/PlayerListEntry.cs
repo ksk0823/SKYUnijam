@@ -34,12 +34,6 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
         PlayerNumbering.OnPlayerNumberingChanged -= OnPlayerNumberingChanged;
     }
 
-    void Awake()
-    {
-        ReadyButton.onClick.AddListener(OnReadyButtonClicked);
-        CharacterSelectButton.onClick.AddListener(OnSelectButtonClicked);
-    }
-
     private void Start()
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
@@ -49,6 +43,13 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
         }
         else
         {
+            // 초기 속성만 설정
+        Hashtable initialProps = new Hashtable() {
+            {"IsReady", isPlayerReady}, 
+            {"CharacterIndex", characterIndex}
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
+        PhotonNetwork.LocalPlayer.SetScore(0);
             /*
             // 초기 속성 설정
             Hashtable initialProps = new Hashtable() {{"IsReady", isPlayerReady}, 
@@ -134,6 +135,7 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
 
     public void OnReadyButtonClicked()
     {
+        Debug.Log("Ready Button Clicked");
         isPlayerReady = !isPlayerReady;
         SetPlayerReady(isPlayerReady);
 
