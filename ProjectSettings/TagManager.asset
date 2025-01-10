@@ -9,6 +9,7 @@ TagManager:
   - Unit Trigger
   - Fixed
   - Un Fixed
+  - Split Disable
   layers:
   - Default
   - TransparentFX

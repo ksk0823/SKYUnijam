@@ -21,6 +21,7 @@ public class NeutralUnit : MonoBehaviour
         coll = GetComponent<Collider2D>();
         myTag = gameObject.tag;
         rb.bodyType = RigidbodyType2D.Kinematic;
+     
     }
 
     void Update()
@@ -37,24 +38,25 @@ public class NeutralUnit : MonoBehaviour
         rb.velocity = Vector2.zero;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
-
     public void Split()
     {
+     
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < 2; i++)
         {
-            GameObject newObject = Instantiate(neutralPrefab, transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
+            GameObject newObject = Instantiate(neutralPrefab, 
+                transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
             Collider2D newColl = newObject.GetComponent<Collider2D>();
             Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
 
             newColl.isTrigger = false;
             newRb.isKinematic = false;
-            newObject.layer = LayerMask.NameToLayer("Active Unit");
-            newObject.tag = "Un Fixed";
+            newObject.layer = LayerMask.NameToLayer("Active Unit"); // Physics2D 상호작용 제거
+
+            foreach (Transform child in newObject.transform) // Unit 오브젝트 아래의 Trigger의 태그 변경
+            {
+                child.gameObject.tag = "Split Disable";
+            }
 
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.SetTarget(FindClosestEnemy());

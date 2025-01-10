@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ObjectTrigger : MonoBehaviour
@@ -16,6 +17,18 @@ public class ObjectTrigger : MonoBehaviour
     {
         myTag = gameObject.tag;
 
+        SetInterTime();
+    }
+
+    public void ChangeTag()
+    { 
+        myTag = gameObject.tag;
+        Debug.Log("ChangedTg");
+        SetInterTime();
+    }
+
+    public void SetInterTime()
+    {
         switch (myTag)
         {
             case "Unit Trigger":
@@ -54,12 +67,12 @@ public class ObjectTrigger : MonoBehaviour
 
     private void HandleInteraction()
     {
-        if (myTag == "Nexus Trigger")
+       if (myTag == "Nexus Trigger")
         {
             InteractNexus();
         }
 
-        else if (myTag == "Unit Trigger")
+        else if (myTag == "Unit Trigger") // myTag : Unit 오브젝트 아래의 Trigger의 태그
         {
             InteractUnit();
         }
@@ -71,7 +84,7 @@ public class ObjectTrigger : MonoBehaviour
         // 플레이어 넥서스 상호작용 로직 추가
     }
 
-    void InteractUnit()
+    void InteractUnit() 
     {
         Debug.Log("유닛 상호작용 실행");
         // 플레이어 유닛 상호작용 로직 추가
