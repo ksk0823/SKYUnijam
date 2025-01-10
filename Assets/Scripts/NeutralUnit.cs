@@ -13,18 +13,19 @@ public class NeutralUnit : MonoBehaviour
 
     private Rigidbody2D rb;
     private Collider2D coll;
-    private bool isMove;
+    private string myTag;
 
     private void Awake()
     {
-        isMove = true;
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+        myTag = gameObject.tag;
+        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     void Update()
     {
-        if (target != null && isMove)
+        if (target != null)
         {
             Vector3 direction = (target.position - transform.position).normalized;
             transform.position += direction * moveSpeed * Time.deltaTime;
@@ -57,9 +58,12 @@ public class NeutralUnit : MonoBehaviour
         {
             GameObject newObject = Instantiate(neutralPrefab, transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
             Collider2D newColl = newObject.GetComponent<Collider2D>();
+            Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
 
             newColl.isTrigger = false;
+            newRb.isKinematic = false;
             newObject.layer = LayerMask.NameToLayer("Active Unit");
+            newObject.tag = "Un Fixed";
 
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.SetTarget(FindClosestEnemy());

@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Nexus Trigger
   - Unit Trigger
+  - Fixed
+  - Un Fixed
   layers:
   - Default
   - TransparentFX
