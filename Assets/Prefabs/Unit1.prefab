@@ -250,5 +250,5 @@ MonoBehaviour:
   health: 2
   moveSpeed: 3
   spawnInterval: 1
-  damage: 2
+  damage: 1
   neutralPrefab: {fileID: 3411832182620486813}
