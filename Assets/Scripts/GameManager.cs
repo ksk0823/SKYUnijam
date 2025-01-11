@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
     public Sprite[] CharacterSprites;
     public Sprite[] NexusSprites;
 
+    [Header("Game Start Effect")]
+    public float startEffectDuration = 3f;
+    public bool isGameStarted = false;
+
     void Awake()
     {
         instance = this;
@@ -63,6 +67,21 @@ public class GameManager : MonoBehaviour
         Debug.Log("ComputerCharacter: " + computerCharacterIndex);
 
         SetSprite();
+    }
+
+    void Start()
+    {
+        StartCoroutine(GameStartSequence());
+    }
+
+    IEnumerator GameStartSequence()
+    {
+        isGameStarted = false;
+
+        // 지정된 시간만큼 대기
+        yield return new WaitForSeconds(startEffectDuration);
+
+        isGameStarted = true;
     }
 
     void Update()

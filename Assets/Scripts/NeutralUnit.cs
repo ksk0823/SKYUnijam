@@ -34,6 +34,7 @@ public class NeutralUnit : UnitObject
 
     public void Split(int splitTimes, Transform transform, EUnitGroup hitUnitGroup)
     {
+        /*
         // 현재 시간이 nextSpawnTime보다 작으면 실행 중단
         if (Time.time < nextSpawnTime)
         {
@@ -42,6 +43,7 @@ public class NeutralUnit : UnitObject
         }
 
         nextSpawnTime = Time.time + spawnInterval;
+        */
 
         EUnitGroup newUnitGroup = EUnitGroup.Neutral;
         if (hitUnitGroup == EUnitGroup.Neutral)

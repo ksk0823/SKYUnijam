@@ -910,6 +910,7 @@ MonoBehaviour:
   unitGroup: 2
   health: 10000
   interactionTime: 0
+  healthText: {fileID: 0}
   isPlayer: 0
 --- !u!1 &409821766
 GameObject:
@@ -1285,13 +1286,14 @@ MonoBehaviour:
   attackSpeed: 3
   moveSpeed: 5
   unitGroup: 0
-  cardManager: {fileID: 1798894759}
+  cardManager: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1984
   clickDamage: 10
   attackRadius: 2
   maxAttackDistance: 5
+  cooldownTime: 2
 --- !u!114 &539580789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2299,6 +2301,7 @@ MonoBehaviour:
   unitPrefab: {fileID: 0}
   nexus: {fileID: 1383545597}
   interactionTime: 0
+  spawnPosition: {fileID: 0}
 --- !u!1 &1104581935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2984,6 +2987,7 @@ MonoBehaviour:
   unitGroup: 0
   health: 10000
   interactionTime: 0
+  healthText: {fileID: 0}
   isPlayer: 1
 --- !u!4 &1406246261 stripped
 Transform:
@@ -3755,7 +3759,7 @@ MonoBehaviour:
   firstAngryTime: 0
   secondAngryTime: 0
   angryEffect: {fileID: 2141661875}
-  playerNexusRegion: {fileID: 1007866822}
+  playerNexusRegion: {fileID: 0}
   playerCharacter: {fileID: 539580782}
   playerKillCount: 0
   maxPlayerKillCount: 0
@@ -4499,6 +4503,7 @@ MonoBehaviour:
   showCards: 0
   cardInterval: 5
   isInsideTrigger: 0
+  isEnemy: 0
   allCards:
   - {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   - {fileID: 11400000, guid: 1c43c67a798a3d744b395b6c299e3f79, type: 2}
@@ -4716,6 +4721,7 @@ MonoBehaviour:
   unitPrefab: {fileID: 0}
   nexus: {fileID: 1383545597}
   interactionTime: 0
+  spawnPosition: {fileID: 0}
 --- !u!58 &1759631289
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4803,6 +4809,7 @@ MonoBehaviour:
   showCards: 0
   cardInterval: 5
   isInsideTrigger: 0
+  isEnemy: 0
   allCards:
   - {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   - {fileID: 11400000, guid: 1c43c67a798a3d744b395b6c299e3f79, type: 2}
@@ -5064,7 +5071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1827438460
 Transform:
   m_ObjectHideFlags: 0
@@ -5473,13 +5480,14 @@ MonoBehaviour:
   attackSpeed: 0
   moveSpeed: 5
   unitGroup: 0
-  cardManager: {fileID: 1703357138}
+  cardManager: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   clickDamage: 10
   attackRadius: 2
   maxAttackDistance: 5
+  cooldownTime: 2
 --- !u!114 &1984641652
 MonoBehaviour:
   m_ObjectHideFlags: 0

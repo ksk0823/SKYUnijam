@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public float attackSpeed;
     public float moveSpeed;
     public EUnitGroup unitGroup;
-    public CardManager cardManager;
 
     [Header("Click Attack Settings")]
     public LayerMask enemyLayer;
@@ -26,30 +25,34 @@ public class PlayerMovement : MonoBehaviour
     Collider2D coll;
 
     private Vector2 inputVec;
-    private Coroutine triggerCoroutine;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         unitGroup = GetComponent<PlayerObject>().unitGroup;
-        StartCoroutine(WaitEffect());
     }
 
     private void Update()
     {
+        if (!GameManager.instance.isGameStarted)
+            return;
+
         ClickAttack();
     }
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         Vector2 nextVec = inputVec * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + nextVec);
     }
-    IEnumerator WaitEffect()
-    {
-        yield return new WaitForSeconds(3f);
-    }
+    
 
     void ClickAttack()
     {
@@ -121,39 +124,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Nexus Region")
-        {
-            if (triggerCoroutine != null)
-            {
-                StopCoroutine(triggerCoroutine);
-            }
-
-            triggerCoroutine = StartCoroutine(TriggerTimer());
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Nexus Region")
-        {
-            if (triggerCoroutine != null)
-            {
-                StopCoroutine(triggerCoroutine);
-                triggerCoroutine = null;
-            }
-        }
-    }
-
-    private IEnumerator TriggerTimer()
-    {
-        yield return new WaitForSeconds(cardManager.cardInterval);
-        cardManager.showCards = true;
-    }
-
     void OnMove(InputValue value)
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            inputVec = Vector2.zero;
+            return;
+        }
+
         inputVec = value.Get<Vector2>();
     }
 }
