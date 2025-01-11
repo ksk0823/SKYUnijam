@@ -9,7 +9,6 @@ public class CardManager : MonoBehaviour
     public bool showCards = false;
     public float cardInterval = 5f;
     public bool isInsideTrigger = false;
-    public bool isEnemy = false;
 
     [Header("Card Data List")]
     public List<CardData> allCards; // CardData ScriptableObject 리스트
@@ -19,48 +18,11 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
-        if (isEnemy)
-        {
-            EnemyCardPick();
-        }
-        else if (showCards)
+        if (showCards)
         {
             ShowCards();
             showCards = false;
         }
-    }
-
-    void EnemyCardPick()
-    {
-        if (allCards.Count < 3)
-        {
-            Debug.Log("카드 데이터 3개 미만");
-            return;
-        }
-
-        List<CardData> selectedCards = new List<CardData>();
-        HashSet<int> usedIndices = new HashSet<int>();
-
-        while (selectedCards.Count < 3)
-        {
-            int randomIndex = Random.Range(0, allCards.Count);
-            if (!usedIndices.Contains(randomIndex))
-            {
-                usedIndices.Add(randomIndex);
-                selectedCards.Add(allCards[randomIndex]);
-            }
-        }
-
-        for (int i = 0; i < cardSlots.Count; i++)
-        {
-            if (i < selectedCards.Count)
-            {
-                cardSlots[i].data = selectedCards[i];
-            }
-        }
-
-        Card xData = cardSlots[0];
-        xData.Effect(GameManager.instance.enemyCharacter, GameManager.instance.enemyUnits);
     }
 
     void ShowCards()
