@@ -2,6 +2,7 @@ using Mirror;
 using UnityEngine;
 using TMPro; // TextMeshPro 네임스페이스 추가
 using UnityEngine.UI;
+using Photon.Realtime;
 
 public class CustomNetworkUI : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class CustomNetworkUI : MonoBehaviour
     }
     void EnterStage()
     {
-        
+        // RoomManager.instance
     }
 
     void StartHost()
