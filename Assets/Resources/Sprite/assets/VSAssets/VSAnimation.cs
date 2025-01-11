@@ -55,13 +55,4 @@ public class VSAnimation : MonoBehaviour
         yield return null;
         
     }
-    void Move()
-    {
-
-    }
-
-    void setChr()
-    {
-
-    }
 }
