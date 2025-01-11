@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Servers/2. login Scene(Game Room Scene ).unity
     guid: 59a015ec3af444c47840a26406ec59db
   - enabled: 1
-    path: Assets/Scenes/Servers/3. PlayScene.unity
+    path: Assets/Scenes/Servers/PlayScene.unity
     guid: 909e260e9ed5740cd9c21ed317b39cad
   m_configObjects: {}
