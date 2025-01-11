@@ -67,7 +67,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.4
 --- !u!114 &7303649897559418901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 7030367389591533038}
+  nexus: {fileID: 0}
 --- !u!1 &3411832182620486813
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,9 +158,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 92a76863ea6924d44b09710010b9be68, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: e174dac5b964d1f41ba3ed378e571eb5, type: 3}
+  m_Color: {r: 1, g: 0.85910857, b: 0.48113197, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -244,7 +245,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 8
-  attackSpeed: 0
   moveSpeed: 1
-  neutralPrefab: {fileID: 3411832182620486813}
-  target: {fileID: 0}
+  neutralPrefab: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}

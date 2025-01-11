@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
-
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 /// <summary>
@@ -273,7 +272,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
-        PhotonNetwork.LoadLevel("TestCombat");
+        PhotonNetwork.LoadLevel("MultiCombat");
         
     }
 

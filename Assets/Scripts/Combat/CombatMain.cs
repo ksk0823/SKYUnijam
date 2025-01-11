@@ -18,23 +18,18 @@ public class CombatMain : MonoBehaviourPunCallbacks
 {
     public static CombatMain Instance; // 싱글톤
 
-    //게임 제한시간 5분
-    private const float DEADLINE = 120f;
-
     private bool _isInit = false;
-
-    //게임 플레이 시간
-    private float _gameTime;
 
     private AudioSource _audioSource;
 
-    //[SerializeField] private CombatUI _combatUI;
-    //[SerializeField] private CombatCameraController _combatCameraController;
+    [Header("Units Object")]
+    public List<GameObject> playerUnits = new List<GameObject>();
+    public List<GameObject> enemyUnits = new List<GameObject>();
     
     private void Awake()
     {
-        PhotonNetwork.SendRate = 20; // 초당 20번 데이터 전송
-        PhotonNetwork.SerializationRate = 10; // 초당 10번 데이터 동기화
+        PhotonNetwork.SendRate = 15; // 20에서 15로 감소
+        PhotonNetwork.SerializationRate = 8; // 10에서 8로 감소
 
         _audioSource = GetComponent<AudioSource>();
 
@@ -45,74 +40,8 @@ public class CombatMain : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (!_isInit) return;
-    
-        CheckTime();
-        //UpdataInput();
-            
-        // 주기적 아이템 생성 관리는 Master에서만 하도록
-        if (PhotonNetwork.IsMasterClient)
-        {
-                //CheckUnit();
-        }
-            
-            // 스코어 및 시간 업데이트
-            //_combatUI.UpdateScoreText(_scoreDict[EUnitGroup.Allay], _scoreDict[EUnitGroup.Enemy]);
-            //_combatUI.UpdateTimeText((int)(DEADLINE - _gameTime));
-            //_combatUI.UpdateArrow();
-        
     }
 
-    private void UpdateInput()
-    {
-        /*
-        bool isInput = false;
-        Vector3 moveVec = Vector3.zero;
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveVec += Vector3.up;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveVec += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveVec += Vector3.down;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveVec += Vector3.right;
-        }
-        
-        if (moveVec != Vector3.zero)
-        {
-            GetPlayerObject().UpdateMoveDir(moveVec);
-            if (GetPlayerObject().StateMachine.CurrentState != GetPlayerObject().StateMachine.Move)
-            {
-                GetPlayerObject().StateMachine.ChangeState(GetPlayerObject().StateMachine.Move, GetPlayerObject());
-            }
-        }
-        
-        if (moveVec == Vector3.zero && _combatUI.GetIsDrag() == false)
-        {
-            //GetPlayerObject().UpdateMoveDir(moveVec);
-            GetPlayerObject().StateMachine.ChangeState(GetPlayerObject().StateMachine.Idle, GetPlayerObject());
-        }
-        
-        if (Input.GetKey(KeyCode.L))
-        {
-            GetPlayerObject().Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.Semicolon))
-        {
-            GetPlayerObject().UseItem(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Quote))
-        {
-            GetPlayerObject().UseItem(1);
-        }
-        */
-    }
 
     private IEnumerator InitCoroutine()
     {
@@ -134,12 +63,11 @@ public class CombatMain : MonoBehaviourPunCallbacks
             return true;
         });
 
-        yield return StartCoroutine(FindPlayerCoroutine());
+        //yield return StartCoroutine(FindPlayerCoroutine());
         
         _isInit = true;
     }
     
-    //캐릭터 움직임은 끊김 방지를 위해 fixed에...
     private void FixedUpdate()
     {
         if (_isInit == false)
@@ -155,36 +83,23 @@ public class CombatMain : MonoBehaviourPunCallbacks
         return _isInit;
     }
 
-    private void CheckTime()
-    {
-        _gameTime += Time.deltaTime;
-        //종료
-        if (_gameTime >= DEADLINE)
-        {
-            photonView.RPC("EndGame", RpcTarget.All);
-        }
-    }
-    
-    public IEnumerator GenerateEnemyPlayerUnitCoroutine(Vector3 objectPos)
-    {
-        
-        //var loadOperation = AddressableManager.LoadAssetAsync<GameObject>("Assets/Prefab/Unit/Potato.prefab");
-        yield return null;
-        
-        string characterPath = "TestPlayer";
-        /*
-        PlayerObject playerObject =
-            Instantiate(characterPath, objectPos, transform.rotation)
-                .GetComponent<PlayerObject>();
-        //_unitDB.InitUnit(playerObject, EUnitGroup.Enemy);
-        */
-    }
-
     private IEnumerator GeneratePlayerUnitCoroutine()
     {
-        string characterPath = "One";  // 기본값
+        string characterPath = null;  // 기본값
         int index = 0;
+        Vector3 spawnPosition;
         
+        // Master Client인 경우 Player 1 위치, 아닌 경우 Player 2 위치에 스폰
+         if (PhotonNetwork.IsMasterClient)
+        {
+            spawnPosition = new Vector3(-4.95f, 0.02f, 0);  // Player 1 위치
+        }
+        else
+        {
+            spawnPosition = new Vector3(4.95f, 0.02f, 0);   // Player 2 위치
+        }
+
+        // 각 플레이어 오브젝트 생성
         object playerCharecterIndex;
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterIndex", out playerCharecterIndex))
         {
@@ -196,42 +111,103 @@ public class CombatMain : MonoBehaviourPunCallbacks
             case 0:
                 characterPath = "TestPlayer";
                 break;
+            case 1:
+                characterPath = "TestPlayer2";
+                break;
         }
 
-        //PlayerObject playerObject =
-                PhotonNetwork.Instantiate(characterPath, new Vector3(7f, 1.25f, 0), transform.rotation, 0);
-        //            .GetComponent<PlayerObject>();
+        // 플레이어 캐릭터 생성
+        GameObject playerObj = PhotonNetwork.Instantiate(characterPath, spawnPosition, transform.rotation, 0);
+
+        StartCoroutine(GenerateNeutralUnitCoroutine(index));
         
+        yield return null;
+    }
+
+    IEnumerator GenerateNeutralUnitCoroutine(int index)
+    {
+        string characterPath = "One";  // 기본값
+        Vector3 spawnPosition;
+        
+        switch (index)
+        {
+            case 0:
+                characterPath = "BaseResource1";
+                break;
+            case 1:
+                characterPath = "BaseResource2";
+                break;
+        }
+
+        // Master Client인 경우 Player 1 위치, 아닌 경우 Player 2 위치에 스폰
+        if (PhotonNetwork.IsMasterClient)
+        {
+            spawnPosition = new Vector3(-5.5f, 3.5f, 0);  // Player 1 위치
+            // 자원 유닛 생성 (6개)
+            for (int i = 0; i < 6; i++)
+            {   
+                
+                GameObject resourceUnit = PhotonNetwork.Instantiate(characterPath, spawnPosition, Quaternion.identity, 0);
+                //resourceUnit.transform.parent = player1Units.transform;  // 플레이어 오브젝트의 자식으로 설정
+                spawnPosition = spawnPosition - new Vector3(0f, 1f, 0);  // 자원 유닛 위치 조정
+                
+            }
+        }
+        else
+        {
+            spawnPosition = new Vector3(3.21f, 3.5f, 0);   // Player 2 위치
+            for (int i = 0; i < 6; i++)
+            {   
+                
+                GameObject resourceUnit = PhotonNetwork.Instantiate(characterPath, spawnPosition, Quaternion.identity, 0);
+                //resourceUnit.transform.parent = player2Units.transform;  // 플레이어 오브젝트의 자식으로 설정
+                spawnPosition = spawnPosition - new Vector3(0f, 1f, 0);  // 자원 유닛 위치 조정
+                
+            }
+        }
+
+        StartCoroutine(GenerateNexusCoroutine(index));
+
+        yield return null;
+    }
+
+    IEnumerator GenerateNexusCoroutine(int index)
+    {
+        string characterPath = "One";  // 기본값
+        Vector3 spawnPosition;
+        
+        switch (index)
+        {
+            case 0:
+                characterPath = "Nexus1";
+                break;
+            case 1:
+                characterPath = "Nexus2";
+                break;
+        }
+
+        // Master Client인 경우 Player 1 위치, 아닌 경우 Player 2 위치에 스폰
+         if (PhotonNetwork.IsMasterClient)
+        {
+            spawnPosition = new Vector3(-7.26f, 0.02f, 0);  // Player 1 위치
+            GameObject resourceUnit = PhotonNetwork.Instantiate(characterPath, spawnPosition, Quaternion.identity, 0);
+                
+        }
+        else
+        {
+            spawnPosition = new Vector3(6.63f, 0.02f, 0);   // Player 2 위치
+            GameObject resourceUnit = PhotonNetwork.Instantiate(characterPath, spawnPosition, Quaternion.identity, 0);
+        }
+
         Hashtable playerProperties = new Hashtable
         {
             { "IsObjectCreated", true }
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-        
+
         yield return null;
     }
     
-    
-    // 게임 시작 시, 플레이어블 캐릭터 전부 가져와서 Allay, Enemy로 나눔
-    public IEnumerator FindPlayerCoroutine()
-    {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        
-        Debug.Log(players.Length);
-        foreach (GameObject p in players)
-        {
-            if (p.GetComponent<PhotonView>().IsMine)
-            {
-                //_unitDB.InitUnit(p.GetComponent<PlayerObject>(), EUnitGroup.Allay);
-            }
-            else
-            {
-                //_unitDB.InitUnit(p.GetComponent<PlayerObject>(), EUnitGroup.Enemy);
-            }
-        }
-        
-        yield return null;
-    }
 
     #region PUN Callbacks
 
