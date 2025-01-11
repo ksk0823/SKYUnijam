@@ -59,7 +59,7 @@ public class NeutralUnit : UnitObject
 
         for (int i = 0; i < splitTimes; i++)
         {
-            GameObject newObject = GameManager.instance.pool.Get(0);
+            //GameObject newObject = GameManager.instance.pool.Get(0);
             //GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
 
             //if (splitTimes == 1) // 예외처리 코드
@@ -114,7 +114,7 @@ public class NeutralUnit : UnitObject
                 child.gameObject.tag = "Split Disable";
             }
 
-            NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
+            //NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
         }
