@@ -1100,7 +1100,7 @@ MonoBehaviour:
   unitGroup: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1984
   clickDamage: 10
   attackRadius: 2
   maxAttackDistance: 5
