@@ -2,30 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cardManager : MonoBehaviour
+public class CardManager : MonoBehaviour
 {
-    public CardAnim[] cards; 
-    // Start is called before the first frame update
-    void Start()
+    public CardAnim[] cards;
+
+    [Header("Card Data List")]
+    public List<CardData> allCards; // CardData ScriptableObject 리스트
+
+    [Header("Card UI References")]
+    public List<Card> cardSlots; // Card 오브젝트 (UI 슬롯)
+     
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.C)) // 카드 생성 초기화
+        {
+            foreach (CardAnim card in cards)
+            {
+                card.Init();
+            }
+            FindObjectOfType<CardManager>().GenerateRandomCards();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GenerateRandomCards()
     {
-        
+        if (allCards.Count < 3)
+        {
+            Debug.Log("카드 데이터 3개 미만"); // 이거 나오면 안됨. 예외처리 필요?
+            return;
+        }
+
+        List<CardData> selectedCards = new List<CardData>();
+        HashSet<int> usedIndices = new HashSet<int>();
+
+        while (selectedCards.Count < 3)
+        {
+            int randomIndex = Random.Range(0, allCards.Count);
+            if (!usedIndices.Contains(randomIndex))
+            {
+                usedIndices.Add(randomIndex);
+                selectedCards.Add(allCards[randomIndex]);
+            }
+        }
+
+        // UI 슬롯에 카드 데이터 적용
+        for (int i = 0; i < cardSlots.Count; i++)
+        {
+            if (i < selectedCards.Count)
+            {
+                cardSlots[i].data = selectedCards[i];
+                ApplyCardToUI(cardSlots[i], selectedCards[i]);
+            }
+        }
     }
-    
+
+    private void ApplyCardToUI(Card card, CardData data)
+    {
+        card.SetCardData(data);
+
+        Debug.Log($"카드 {data.cardName}가 UI에 적용됨");
+    }
+
     public void dissolveCards()
     {
-        for (int i = 0; i <= 2; i ++) {
-        cards[i].textDissapear();
-        if(!cards[i].clicked)
-        {
-            cards[i].dissolve();
-        }
+        for (int i = 0; i < 3; i ++) {
+            cards[i].textDissapear();
+
+            if(!cards[i].clicked)
+                cards[i].dissolve(); // 불타 없어지는 이펙트
         }
     }
-
 }

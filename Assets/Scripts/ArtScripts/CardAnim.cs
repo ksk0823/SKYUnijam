@@ -29,18 +29,14 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         transform.DOScale(1f,0.2f);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         image = gameObject.GetComponent<Image>();
         material = Instantiate(image.material);
         image.material = material;
-        material.SetFloat("_Alive",1f);
-        material.SetFloat("_cutoffHeight",0f);
-        
+        Init();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.R))
@@ -61,8 +57,14 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         yield return null;
     }
+
+    public void Init()
+    {
+        material.SetFloat("_Alive", 1f);
+        material.SetFloat("_cutoffHeight", 0f);
+    }
   
-    public void cardClcik()
+    public void cardClick()
     {
         StartCoroutine(click());
         

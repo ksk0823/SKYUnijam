@@ -37,7 +37,7 @@ public class ObjectTrigger : MonoBehaviour
                 break;
 
             case "Nexus Trigger":
-                interactionTime = GameManager.instance.nexus.interactionTime;
+                //interactionTime = GameManager.instance.nexus.interactionTime;
                 break;
 
             default:
