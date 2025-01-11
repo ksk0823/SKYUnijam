@@ -22,7 +22,14 @@ public class CharacterChanger : MonoBehaviour
         img = gameObject.GetComponent<Image>();
         material = Instantiate(img.material);
         img.material = material;
-        img.material.SetTexture("_Light_Texture",tD[0]);
+        if(!isClient)
+        {
+            img.material.SetTexture("_Light_Texture",tD[0]);
+        }
+        else
+        {
+            img.material.SetTexture("_Light_Texture",tD[3]);
+        }
 
     }
 

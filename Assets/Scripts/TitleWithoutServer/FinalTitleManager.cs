@@ -22,8 +22,8 @@ public class FinalTitleManager : MonoBehaviour
     
     [Header("Ready State")]
     public Button PlayerReadyButton;
-    public TMP_Text ComputerReadyText;
-    public GameObject CharacterSelectPanel;
+    public GameObject ComputerCharacterInfo;
+    public GameObject startGameButton;
     
     [Header("Sound")]
     public AudioClip clickSound;
@@ -36,32 +36,19 @@ public class FinalTitleManager : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        InitializeGame();
         instance = this;
     }
 
-    private void InitializeGame()
+    private void SelectComputerCharacter()
     {
-        /*
-        isPlayerReady = false;
-        playerCharacterIndex = 0;
-        computerCharacterIndex = Random.Range(0, CharacterSprites.Length);
+        computerCharacterIndex = Random.Range(0, 3);
+        Debug.Log("Computer Character Index: " + computerCharacterIndex);
+
+        CharacterChanger characterChanger = ComputerCharacterInfo.GetComponent<CharacterChanger>();
+        characterChanger.imagechange(computerCharacterIndex);
+        characterChanger.getReady();
         
-        if (PlayerCharacterImage != null && CharacterSprites.Length > 0)
-        {
-            PlayerCharacterImage.sprite = CharacterSprites[0];
-        }
-        
-        if (ComputerCharacterImage != null)
-        {
-            ComputerCharacterImage.sprite = CharacterSprites[computerCharacterIndex];
-        }
-        
-        if (ComputerReadyText != null)
-        {
-            ComputerReadyText.text = "Ready";
-        }
-        */
+        startGameButton.SetActive(true);
     }
 
     #region UI Callbacks
@@ -73,13 +60,12 @@ public class FinalTitleManager : MonoBehaviour
     public void OnBackButtonClicked()
     {
         SetActivePanel(TitlePanel.name);
-        InitializeGame();
     }
 
     public void OnReadyButtonClicked()
     {
         isPlayerReady = !isPlayerReady;
-        UpdateReadyState();
+        SelectComputerCharacter();
     }
 
     public void OnCharacterSelectButtonClicked(int index)
@@ -104,11 +90,7 @@ public class FinalTitleManager : MonoBehaviour
 
     private void UpdateReadyState()
     {
-        
-        if (CharacterSelectPanel != null)
-        {
-            CharacterSelectPanel.SetActive(!isPlayerReady);
-        }
+    
     }
 
     private void SetActivePanel(string activePanel)
