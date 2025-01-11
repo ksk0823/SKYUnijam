@@ -6,12 +6,14 @@ public class NeutralUnit : MonoBehaviour
     [Header("Main Settings")]
     public int health = 8;
     public float moveSpeed = 3f;
+    public float spawnInterval = 1f;
 
     [Header("Objects")]
     public GameObject neutralPrefab;
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
+    private bool canSpawn = true;
 
     private void Awake()
     {
@@ -31,23 +33,17 @@ public class NeutralUnit : MonoBehaviour
 
     public void Split(int splitTimes, Transform transform)
     {
+        if (!canSpawn)
+        {
+            Debug.Log("Spawn is on cooldown.");
+            return;
+        }
+
+        StartCoroutine(SpawnCooldown());
+
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < splitTimes; i++)
         {
-            //GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
-
-            //if (splitTimes == 1) // 예외처리 코드
-            //{
-            //    Debug.Log("Make only one object");
-
-            //    tempObject = GameManager.instance.pool.Get(0);
-            //    //SpriteRenderer tempSr = tempObject.GetComponent<SpriteRenderer>();
-
-            //    tempObject.transform.position = transform.position + Vector3.up * 0.5f;
-            //    tempObject.transform.rotation = Quaternion.identity;
-            //    tempObject.layer = LayerMask.NameToLayer("Active Unit");
-            //}
-
             GameObject newObject = GameManager.instance.pool.Get(0);
             newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
             newObject.transform.rotation = Quaternion.identity;
@@ -65,11 +61,17 @@ public class NeutralUnit : MonoBehaviour
             }
 
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
-            //neutralScript.SetTarget(FindClosestEnemy());
             neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
         }
-    }   
+    }
+
+    private System.Collections.IEnumerator SpawnCooldown()
+    {
+        canSpawn = false;
+        yield return new WaitForSeconds(spawnInterval);
+        canSpawn = true;
+    }
 
     void MoveToRandomDirection()
     {
@@ -111,27 +113,3 @@ public class NeutralUnit : MonoBehaviour
         }
     }
 }
-
-    //public void SetTarget(Transform enemy)
-    //{
-    //    target = enemy;
-    //}
-
-    //private Transform FindClosestEnemy()
-    //{
-    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-    //    Transform closest = null;
-    //    float closestDistance = Mathf.Infinity;
-
-    //    foreach (GameObject enemy in enemies)
-    //    {
-    //        float distance = Vector3.Distance(transform.position, enemy.transform.position);
-    //        if (distance < closestDistance)
-    //        {
-    //            closestDistance = distance;
-    //            closest = enemy.transform;
-    //        }
-    //    }
-
-    //    return closest;
-    //}
