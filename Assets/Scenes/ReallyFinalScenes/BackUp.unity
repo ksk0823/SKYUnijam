@@ -16764,9 +16764,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1007866824}
   - component: {fileID: 1007866823}
+  - component: {fileID: 1007866825}
   m_Layer: 0
   m_Name: Player Nexus Region
-  m_TagString: Untagged
+  m_TagString: Nexus Region
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16838,6 +16839,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1007866825
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007866822}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.46, y: 3.65}
+    newSize: {x: 2.46, y: 3.65}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.46, y: 3.65}
+  m_EdgeRadius: 0
 --- !u!1 &1085265567
 GameObject:
   m_ObjectHideFlags: 0
@@ -23075,7 +23121,7 @@ MonoBehaviour:
   firstAngryTime: 0
   secondAngryTime: 0
   angryEffect: {fileID: 2141661875}
-  nexusSpawnUnit: {fileID: 0}
+  playerNexusRegion: {fileID: 0}
   playerCharacter: {fileID: 539580782}
   playerKillCount: 0
   maxPlayerKillCount: 0
@@ -23098,6 +23144,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c90457d7d2c8d418ca4b9291e26117b1, type: 3}
   - {fileID: 21300000, guid: 5c21fa57d2668461fb35509014b5f1ed, type: 3}
   - {fileID: 21300000, guid: dd1bdc6d40b28425c9a0715e527f10b3, type: 3}
+  startEffectDuration: 3
+  isGameStarted: 0
 --- !u!82 &1572379254
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33620,6 +33668,11 @@ MonoBehaviour:
   - {fileID: 315128746}
   - {fileID: 592541303}
   - {fileID: 1649249510}
+  cardTimer: 0
+  showCards: 0
+  cardInterval: 5
+  isInsideTrigger: 0
+  isEnemy: 0
   allCards:
   - {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   - {fileID: 11400000, guid: 1c43c67a798a3d744b395b6c299e3f79, type: 2}
@@ -33645,7 +33698,7 @@ GameObject:
   - component: {fileID: 1799681309}
   m_Layer: 0
   m_Name: Enemy Nexus Region
-  m_TagString: Untagged
+  m_TagString: Nexus Region
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34288,7 +34341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
-  moveSpeed: 3
+  moveSpeed: 5
   attackRadius: 2
   maxAttackDistance: 5
   attackDamage: 10

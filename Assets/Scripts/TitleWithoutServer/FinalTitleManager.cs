@@ -89,7 +89,7 @@ public class FinalTitleManager : MonoBehaviour
             Debug.Log("PlayerCharacter: " + playerCharacterIndex);
             PlayerPrefs.SetInt("PlayerCharacter", playerCharacterIndex);
             PlayerPrefs.SetInt("ComputerCharacter", computerCharacterIndex);
-            SceneManager.LoadScene("SingleCombat");
+            SceneManager.LoadScene("Backup");
         }
     }
     #endregion
