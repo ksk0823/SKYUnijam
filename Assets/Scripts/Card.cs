@@ -23,16 +23,19 @@ public class Card : MonoBehaviour
         if (cardNameText != null)
         {
             cardNameText.text = data.cardName;
+            cardNameText.color = Color.white;
+            cardNameText.alpha = 1f;
             Debug.Log($"Card Name : {cardNameText.text}");
         }
 
         if (cardDescriptionText != null)
         {
             cardDescriptionText.text = data.description;
+            cardDescriptionText.color = Color.white;
+            cardDescriptionText.alpha = 1f;
             Debug.Log($"Desciption : {cardDescriptionText.text}");
         }
     }
-            
 
     public void Effect(GameObject player, GameObject unit)
     {
