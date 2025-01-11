@@ -255,6 +255,7 @@ MonoBehaviour:
   unitGroup: 0
   pv: {fileID: 0}
   health: 10000
+  interactionTime: 0
 --- !u!114 &6900848086671643186
 MonoBehaviour:
   m_ObjectHideFlags: 0

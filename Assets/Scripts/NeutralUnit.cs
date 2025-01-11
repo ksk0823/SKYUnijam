@@ -1,3 +1,4 @@
+using UnityEditor.EditorTools;
 using UnityEngine;
 using Photon.Pun;
 
@@ -5,8 +6,8 @@ public class NeutralUnit : UnitObject
 {
     [Header("Main Settings")]
     public int index;
+    public bool isFirst;
     public int health = 8;
-    public float attackSpeed;
     public float moveSpeed = 3f;
 
     [Header("Objects")]
@@ -14,15 +15,16 @@ public class NeutralUnit : UnitObject
     public Transform target;
 
     private Rigidbody2D rb;
-    private Collider2D coll;
-    private string myTag;
+    private Vector2 currentDirection;
 
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<Collider2D>();
-        if (!pv.IsMine)
+        //coll = GetComponent<Collider2D>();
+        if(isFirst)
+        {
+            if (!pv.IsMine)
         {
             unitGroup = EUnitGroup.Enemy;
             CombatMain.Instance.enemyUnits.Add(gameObject);
@@ -30,10 +32,15 @@ public class NeutralUnit : UnitObject
         {
             unitGroup = EUnitGroup.Allay;
             CombatMain.Instance.playerUnits.Add(gameObject);
-        }
+        }}
         
-        myTag = gameObject.tag;
+        //myTag = gameObject.tag;
         rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    private void Start()
+    {
+        currentDirection = Vector2.zero;
     }
 
     void Update()
@@ -47,21 +54,7 @@ public class NeutralUnit : UnitObject
 
     private void FixedUpdate()
     {
-        rb.velocity = Vector2.zero;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Player"))
-        //{
-        //    coll.isTrigger = false;
-        //    Split();
-        //    Destroy(gameObject); // 원래 오브젝트 삭제
-        //}
-        //else if (collision.CompareTag("Enemy"))
-        //{
-        //    // 전투 구현해야 함
-        //}
+        rb.velocity = currentDirection * moveSpeed;
     }
 
     public void Split()
@@ -87,6 +80,15 @@ public class NeutralUnit : UnitObject
     [PunRPC]
     private void RPCInitializeUnit()
     {
+        if (pv.IsMine)
+        {
+            unitGroup = EUnitGroup.Allay;
+            CombatMain.Instance.playerUnits.Add(gameObject);
+        } else
+        {
+            unitGroup = EUnitGroup.Enemy;
+            CombatMain.Instance.enemyUnits.Add(gameObject);
+        }
         Collider2D coll = GetComponent<Collider2D>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         
@@ -94,31 +96,79 @@ public class NeutralUnit : UnitObject
         rb.isKinematic = false;
         gameObject.layer = LayerMask.NameToLayer("Active Unit");
         gameObject.tag = "Un Fixed";
-
-        SetTarget(FindClosestEnemy());
-    }
-
-    public void SetTarget(Transform enemy)
-    {
-        target = enemy;
-    }
-
-    private Transform FindClosestEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        Transform closest = null;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (GameObject enemy in enemies)
+        foreach (Transform child in transform) // Unit 오브젝트 아래의 Trigger의 태그 변경
         {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closest = enemy.transform;
-            }
+            Debug.Log("Changed to split disable");
+            child.gameObject.tag = "Split Disable";
         }
 
-        return closest;
+        //SetTarget(FindClosestEnemy());
+        health = 8;
+        MoveToRandomDirection();
+    }
+
+    void MoveToRandomDirection()
+    {
+        currentDirection = Random.insideUnitCircle.normalized;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collObj = collision.gameObject;
+        string objTag = collision.transform.tag;
+
+        if (objTag == "Fixed")
+        {
+            MoveToRandomDirection();
+        }
+
+        else if (objTag == "Nexus" || objTag == "Border" || objTag == "Enemy")
+        {
+            currentDirection.x *= Random.Range(-0.8f, -1.2f);
+            currentDirection.y *= Random.Range(-0.8f, -1.2f);
+
+            if (objTag == "Enemy")
+            {
+                Damage(1);
+                collObj.GetComponent<Enemy>().Damage(1);
+            }
+        }
+    }
+
+    public void Damage(int damage)
+    {
+        Debug.Log($"Unit Damaged, Damage : {damage}");
+        health -= damage;
+
+        if (health <= 0)
+        {
+            Debug.Log("I'm Dead");
+            gameObject.SetActive(false);
+        }
     }
 }
+
+    //public void SetTarget(Transform enemy)
+    //{
+    //    target = enemy;
+    //}
+
+    //private Transform FindClosestEnemy()
+    //{
+    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    //    Transform closest = null;
+    //    float closestDistance = Mathf.Infinity;
+
+    //    foreach (GameObject enemy in enemies)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, enemy.transform.position);
+    //        if (distance < closestDistance)
+    //        {
+    //            closestDistance = distance;
+    //            closest = enemy.transform;
+    //        }
+    //    }
+
+    //    return closest;
+    //}
+

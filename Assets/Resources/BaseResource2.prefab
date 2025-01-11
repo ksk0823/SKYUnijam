@@ -271,8 +271,8 @@ MonoBehaviour:
   unitGroup: 0
   pv: {fileID: 0}
   index: 2
+  isFirst: 1
   health: 8
-  attackSpeed: 0
   moveSpeed: 1
   neutralPrefab: {fileID: 3411832182620486813, guid: faa528d45d128f746a0967246eaa8213, type: 3}
   target: {fileID: 0}

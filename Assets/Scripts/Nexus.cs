@@ -6,6 +6,7 @@ public class Nexus : UnitObject
 {
     [Header("Main Settings")]
     public int health;
+    public int interactionTime;
 
     protected override void Awake()
     {
