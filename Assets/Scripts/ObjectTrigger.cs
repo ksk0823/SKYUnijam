@@ -8,6 +8,7 @@ public class ObjectTrigger : MonoBehaviour
     [Header("Objects")]
     public NeutralUnit unitPrefab;
     public Nexus nexus;
+    public ParticleSystem part;
 
     private bool isPlayerNearby = false;
     private string myTag;
@@ -19,6 +20,7 @@ public class ObjectTrigger : MonoBehaviour
 
     private void Awake()
     {
+        part.gameObject.SetActive(false);  
         myTag = gameObject.tag;
 
         SetInterTime();
@@ -173,6 +175,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            part.gameObject.SetActive(true);
             isPlayerNearby = true;
             hitUnitGroup = other.GetComponent<UnitObject>().unitGroup;
         }
@@ -182,6 +185,8 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            part.Stop();
+            part.gameObject.SetActive(false);
             isPlayerNearby = false;
             hitUnitGroup = EUnitGroup.Neutral;
         }
