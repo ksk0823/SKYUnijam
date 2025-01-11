@@ -8,11 +8,11 @@ public class ObjectTrigger : MonoBehaviour
     [Header("Objects")]
     public NeutralUnit unitPrefab;
     public Nexus nexus;
+    public float interactionTime;
 
     private bool isPlayerNearby = false;
     private string myTag;
     private float holdTime = 0f;
-    private float interactionTime;
 
     private void Awake()
     {
@@ -33,16 +33,25 @@ public class ObjectTrigger : MonoBehaviour
         switch (myTag)
         {
             case "Unit Trigger":
-                interactionTime = 3f;
                 break;
 
             case "Nexus Trigger":
-                //interactionTime = GameManager.instance.nexus.interactionTime;
+                interactionTime = 6f;
+                DecreaseInteractionTime(interactionTime);
                 break;
 
             default:
                 interactionTime = 5f;
+                DecreaseInteractionTime(interactionTime);
                 break;
+        }
+    }
+
+    void DecreaseInteractionTime(float time)
+    {
+        if (GameManager.instance.playerCharacterIndex == 1) // 플레이어가 파랑색일 때
+        {
+            time *= 0.7f; // 채굴 속도 30% 감소
         }
     }
 
