@@ -1,3 +1,4 @@
+using UnityEditor.EditorTools;
 using UnityEngine;
  
 public class NeutralUnit : MonoBehaviour
@@ -45,12 +46,13 @@ public class NeutralUnit : MonoBehaviour
 
     public void Split()
     {
-     
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < 2; i++)
         {
-            GameObject newObject = Instantiate(neutralPrefab, 
-                transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
+            GameObject newObject = GameManager.instance.pool.Get(0);
+            newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
+            newObject.transform.rotation = Quaternion.identity;
+
             Collider2D newColl = newObject.GetComponent<Collider2D>();
             Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
 
@@ -65,6 +67,7 @@ public class NeutralUnit : MonoBehaviour
 
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             //neutralScript.SetTarget(FindClosestEnemy());
+            neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
         }
     }
@@ -78,12 +81,12 @@ public class NeutralUnit : MonoBehaviour
     {
         string objTag = collision.transform.tag;
 
-        if (objTag == "Nexus" || objTag == "Fixed")
+        if (objTag == "Fixed")
         {
             MoveToRandomDirection();
         }
 
-        else if (objTag == "Border" || objTag == "Enemy")
+        else if (objTag == "Nexus" || objTag == "Border" || objTag == "Enemy")
         {
             currentDirection.x *= Random.Range(-0.8f, -1.2f);
             currentDirection.y *= Random.Range(-0.8f, -1.2f);

@@ -329,6 +329,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
@@ -418,6 +422,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
@@ -582,6 +590,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
@@ -793,6 +805,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
@@ -1216,6 +1232,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
@@ -1546,6 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad5cdebf1300ba46829bc9b8157386e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 2073371044}
 --- !u!1 &707233909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,6 +2079,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
@@ -3463,6 +3488,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
@@ -3952,6 +3981,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
@@ -4152,6 +4185,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
@@ -4268,6 +4305,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3403716789349000999, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
   m_PrefabInstance: {fileID: 1828563352}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2073371042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2073371043}
+  - component: {fileID: 2073371044}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2073371043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073371042}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2073371044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073371042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840b7c00d9c2e47b4cfecf40c3d368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
 --- !u!1001 &1149589833237074856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4348,6 +4431,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
+      propertyPath: poolManager
+      value: 
+      objectReference: {fileID: 2073371044}
     - target: {fileID: 7030367389591533038, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: neutralPrefab
       value: 
@@ -4436,6 +4523,7 @@ SceneRoots:
   - {fileID: 1383545596}
   - {fileID: 356682531}
   - {fileID: 705342074}
+  - {fileID: 2073371043}
   - {fileID: 905289241}
   - {fileID: 1827438460}
   - {fileID: 1754334065}
