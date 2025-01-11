@@ -21,6 +21,7 @@ public class PlayerObject : UnitObject
         if (!pv.IsMine)
         {
             GetComponent<PlayerInput>().enabled = false;
+            GetComponent<PlayerMovement>().enabled = false;
             unitGroup = EUnitGroup.Enemy;
         } else
         {

@@ -4,6 +4,7 @@ using Photon.Pun;
 public class NeutralUnit : UnitObject
 {
     [Header("Main Settings")]
+    public int index;
     public int health = 8;
     public float attackSpeed;
     public float moveSpeed = 3f;
@@ -24,9 +25,11 @@ public class NeutralUnit : UnitObject
         if (!pv.IsMine)
         {
             unitGroup = EUnitGroup.Enemy;
+            CombatMain.Instance.enemyUnits.Add(gameObject);
         } else
         {
             unitGroup = EUnitGroup.Allay;
+            CombatMain.Instance.playerUnits.Add(gameObject);
         }
         
         myTag = gameObject.tag;
@@ -63,21 +66,36 @@ public class NeutralUnit : UnitObject
 
     public void Split()
     {
-        // 분열된 두 개의 오브젝트 생성
+        //if (!PhotonNetwork.IsMasterClient) return;
+        
         for (int i = 0; i < 2; i++)
         {
-            GameObject newObject = Instantiate(neutralPrefab, transform.position + Vector3.up * 0.5f * i, Quaternion.identity);
+            Vector3 spawnPosition = transform.position + Vector3.up * 0.5f * i;
+            GameObject newObject = PhotonNetwork.Instantiate("Unit"+index.ToString(), spawnPosition, Quaternion.identity);
+            
             Collider2D newColl = newObject.GetComponent<Collider2D>();
             Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
-
-            newColl.isTrigger = false;
-            newRb.isKinematic = false;
-            newObject.layer = LayerMask.NameToLayer("Active Unit");
-            newObject.tag = "Un Fixed";
-
-            NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
-            neutralScript.SetTarget(FindClosestEnemy());
+            
+            // RPC를 통해 새로 생성된 오브젝트의 속성을 설정
+            PhotonView newPV = newObject.GetComponent<PhotonView>();
+            newPV.RPC("RPCInitializeUnit", RpcTarget.All);
+            
+            
         }
+    }
+
+    [PunRPC]
+    private void RPCInitializeUnit()
+    {
+        Collider2D coll = GetComponent<Collider2D>();
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        
+        coll.isTrigger = false;
+        rb.isKinematic = false;
+        gameObject.layer = LayerMask.NameToLayer("Active Unit");
+        gameObject.tag = "Un Fixed";
+
+        SetTarget(FindClosestEnemy());
     }
 
     public void SetTarget(Transform enemy)

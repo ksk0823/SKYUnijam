@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 110387527834900895}
   - component: {fileID: 2037548822477893817}
   - component: {fileID: 7303649897559418901}
+  - component: {fileID: 7533932410344382900}
   m_Layer: 9
   m_Name: Trigger
   m_TagString: Unit Trigger
@@ -81,6 +82,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 7030367389591533038}
+--- !u!114 &7533932410344382900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2847498956555154540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3411832182620486813
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitGroup: 0
   pv: {fileID: 0}
+  index: 1
   health: 8
   attackSpeed: 0
   moveSpeed: 1
@@ -270,7 +294,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -876216348016490563}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

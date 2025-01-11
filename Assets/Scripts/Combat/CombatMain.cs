@@ -23,8 +23,8 @@ public class CombatMain : MonoBehaviourPunCallbacks
     private AudioSource _audioSource;
 
     [Header("Units Object")]
-    public GameObject player1Units;
-    public GameObject player2Units;
+    public List<GameObject> playerUnits = new List<GameObject>();
+    public List<GameObject> enemyUnits = new List<GameObject>();
     
     private void Awake()
     {
@@ -40,18 +40,6 @@ public class CombatMain : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (!_isInit) return;
-            
-        // 주기적 아이템 생성 관리는 Master에서만 하도록
-        if (PhotonNetwork.IsMasterClient)
-        {
-                //CheckUnit();
-        }
-            
-            // 스코어 및 시간 업데이트
-            //_combatUI.UpdateScoreText(_scoreDict[EUnitGroup.Allay], _scoreDict[EUnitGroup.Enemy]);
-            //_combatUI.UpdateTimeText((int)(DEADLINE - _gameTime));
-            //_combatUI.UpdateArrow();
-        
     }
 
 
@@ -94,17 +82,10 @@ public class CombatMain : MonoBehaviourPunCallbacks
     {
         return _isInit;
     }
-    
-    public IEnumerator GenerateEnemyPlayerUnitCoroutine(Vector3 objectPos)
-    {
-        yield return null;
-        
-        string characterPath = "TestPlayer";
-    }
 
     private IEnumerator GeneratePlayerUnitCoroutine()
     {
-        string characterPath = "One";  // 기본값
+        string characterPath = null;  // 기본값
         int index = 0;
         Vector3 spawnPosition;
         
@@ -139,8 +120,6 @@ public class CombatMain : MonoBehaviourPunCallbacks
         GameObject playerObj = PhotonNetwork.Instantiate(characterPath, spawnPosition, transform.rotation, 0);
 
         StartCoroutine(GenerateNeutralUnitCoroutine(index));
-        
-        
         
         yield return null;
     }
