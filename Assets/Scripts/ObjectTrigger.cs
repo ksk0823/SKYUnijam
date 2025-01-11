@@ -12,7 +12,7 @@ public class ObjectTrigger : MonoBehaviour
     private bool isPlayerNearby = false;
     private string myTag;
     private float holdTime = 0f;
-    private float interactionTime;
+    public float interactionTime;
 
     private EUnitGroup hitUnitGroup;
 
@@ -35,7 +35,6 @@ public class ObjectTrigger : MonoBehaviour
         switch (myTag)
         {
             case "Unit Trigger":
-                interactionTime = 3f;
                 break;
 
             case "Nexus Trigger":
