@@ -1984,6 +1984,7 @@ GameObject:
   - component: {fileID: 796283285}
   - component: {fileID: 796283287}
   - component: {fileID: 796283286}
+  - component: {fileID: 796283288}
   m_Layer: 5
   m_Name: Enemy Card UI
   m_TagString: Untagged
@@ -2052,6 +2053,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796283284}
   m_CullTransparentMesh: 1
+--- !u!114 &796283288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796283284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9aad1ce3058504194a87ac1571a544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &843668328
 GameObject:
   m_ObjectHideFlags: 0

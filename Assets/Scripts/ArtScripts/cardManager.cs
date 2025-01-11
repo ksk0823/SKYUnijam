@@ -16,6 +16,11 @@ public class CardManager : MonoBehaviour
     [Header("Card UI References")]
     public List<Card> cardSlots; // Card 오브젝트 (UI 슬롯)
 
+    private void Start()
+    {
+        HideAllCardSlots();
+    }
+
     private void Update()
     {
         if (showCards)
@@ -27,11 +32,29 @@ public class CardManager : MonoBehaviour
 
     void ShowCards()
     {
+        ShowAllCardSlots();
+
         foreach (CardAnim card in cards)
         {
             card.Init();
         }
         FindObjectOfType<CardManager>().GenerateRandomCards();
+    }
+
+    private void HideAllCardSlots()
+    {
+        foreach (var slot in cardSlots)
+        {
+            slot.gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowAllCardSlots()
+    {
+        foreach (var slot in cardSlots)
+        {
+            slot.gameObject.SetActive(true);
+        }
     }
 
     public void GenerateRandomCards()

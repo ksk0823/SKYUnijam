@@ -132,8 +132,11 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator TriggerTimer()
     {
-        yield return new WaitForSeconds(cardManager.cardInterval);
-        cardManager.showCards = true;
+        if (cardManager != null)
+        {
+            yield return new WaitForSeconds(cardManager.cardInterval);
+            cardManager.showCards = true;
+        }
     }
 
     void OnMove(InputValue value)
