@@ -36,5 +36,14 @@ public class RoomManager : NetworkRoomManager
         // 게임 시작 로직 실행
         // 예: 특정 씬 로드, 초기화 등
         ServerChangeScene("PlayScene"); // GameScene으로 이동
+
+    }
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+    // PlayerPrefab을 수동으로 생성
+    GameObject player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity); // 원하는 위치 지정 가능
+    NetworkServer.AddPlayerForConnection(conn, player);
+
+    Debug.Log($"Player added for connection: {conn.connectionId}");
     }
 }
