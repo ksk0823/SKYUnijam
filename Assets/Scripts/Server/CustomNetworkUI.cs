@@ -9,6 +9,7 @@ public class CustomNetworkUI : MonoBehaviour
     public Button connectButton;       // 클라이언트 연결 버튼
     public Button startHostButton;     // 호스트 시작 버튼
     public TextMeshProUGUI statusText; // 서버 상태 표시 텍스트
+    public Button RealStart;
 
     void Start()
     {
@@ -40,6 +41,10 @@ public class CustomNetworkUI : MonoBehaviour
                 statusText.text = "Please enter an IP address.";
             }
         }
+    }
+    void EnterStage()
+    {
+        
     }
 
     void StartHost()
