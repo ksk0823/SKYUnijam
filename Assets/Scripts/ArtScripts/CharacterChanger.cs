@@ -16,6 +16,8 @@ public class CharacterChanger : MonoBehaviour
     public GameObject chrSelector;
     private Material material;
     private Image img;
+    public string[] names;
+    public string[] descriptions;
     // Start is called before the first frame update
     void Start()
     {

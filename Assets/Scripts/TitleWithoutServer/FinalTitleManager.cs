@@ -16,7 +16,9 @@ public class FinalTitleManager : MonoBehaviour
     public Image PlayerCharacterImage;
     public Image ComputerCharacterImage;
     public TMP_Text PlayerCharacterText;
+    
     public TMP_Text PlayerDescriptionText;
+    
 
     public Sprite[] CharacterSprites;
     
@@ -42,6 +44,10 @@ public class FinalTitleManager : MonoBehaviour
     private void SelectComputerCharacter()
     {
         computerCharacterIndex = Random.Range(0, 3);
+        while(computerCharacterIndex == playerCharacterIndex)
+        {
+            computerCharacterIndex = Random.Range(0, 3);
+        }
         Debug.Log("Computer Character Index: " + computerCharacterIndex);
 
         CharacterChanger characterChanger = ComputerCharacterInfo.GetComponent<CharacterChanger>();

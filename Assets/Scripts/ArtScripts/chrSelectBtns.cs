@@ -12,8 +12,8 @@ public class chrSelectBtns : MonoBehaviour, IPointerClickHandler
     {
         cC.imagechange(chrNum);
         cC.changeSelectorPosition(chrNum);
-        //FinalTitleManager.instance.PlayerDescriptionText.text = cC.descriptions[chrNum];
-        //FinalTitleManager.instance.PlayerCharacterText.text = cC.names[chrNum];
+        FinalTitleManager.instance.PlayerDescriptionText.text = cC.descriptions[chrNum];
+        FinalTitleManager.instance.PlayerCharacterText.text = cC.names[chrNum];
         FinalTitleManager.instance.SetPlayerCharacter(chrNum);
         PlayerPrefs.SetInt("PlayerCharacter", chrNum);
         PlayerPrefs.Save();
