@@ -35,8 +35,8 @@ public class ObjectTrigger : MonoBehaviour
                 interactionTime = 3f;
                 break;
 
-            case "Nexus Trigger":
-                interactionTime = 5f;
+            case "Nexus Trigger": // 40초로 올리기
+                interactionTime = GameManager.instance.nexus.interactionTime;
                 break;
 
             default:

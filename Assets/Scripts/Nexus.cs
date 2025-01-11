@@ -6,6 +6,7 @@ public class Nexus : MonoBehaviour
 {
     [Header("Main Settings")]
     public int health;
+    public int interactionTime;
 
     private void Awake()
     {

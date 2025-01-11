@@ -93,14 +93,14 @@ public class NeutralUnit : MonoBehaviour
 
             if (objTag == "Enemy")
             {
-                Damage();
+                Damage(1);
             }
         }
     }
 
-    void Damage()
+    public void Damage(int damage)
     {
-        health--;
+        health -= damage;
         if (health <= 0)
         {
             gameObject.SetActive(false);
