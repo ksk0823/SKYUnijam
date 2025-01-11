@@ -66,9 +66,10 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Init()
     {
-        base.transform.DOLocalMoveY(-100,0.2f);
+        base.transform.localPosition = new Vector3(base.transform.localPosition.x, 0, 0);
         material.SetFloat("_Alive", 1f);
         material.SetFloat("_cutoffHeight", 0f);
+        clicked = false;
     }
   
     public void cardClick()
