@@ -39,7 +39,7 @@ public class NeutralUnit : UnitObject
                     return;
                 }
         
-                StartCoroutine(SpawnCooldown());
+        StartCoroutine(SpawnCooldown());
                 
         EUnitGroup newUnitGroup = EUnitGroup.Neutral;
         if (hitUnitGroup == EUnitGroup.Neutral)
@@ -156,7 +156,6 @@ public class NeutralUnit : UnitObject
                 unitGroup != EUnitGroup.Neutral && 
                 otherUnit.unitGroup != EUnitGroup.Neutral)
             {
-                Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
                 Damage(1);
                 otherUnit.Damage(1);
             }

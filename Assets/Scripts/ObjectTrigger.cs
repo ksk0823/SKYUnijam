@@ -15,6 +15,7 @@ public class ObjectTrigger : MonoBehaviour
     public float interactionTime;
 
     private EUnitGroup hitUnitGroup;
+    public Transform spawnPosition;
 
     private void Awake()
     {
@@ -41,6 +42,9 @@ public class ObjectTrigger : MonoBehaviour
                 interactionTime = 6f;
                 DecreaseInteractionTime(interactionTime);
                 break;
+            case "Fixed":
+                interactionTime = 5f;
+                break;
 
             default:
                 interactionTime = 5f;
@@ -59,6 +63,19 @@ public class ObjectTrigger : MonoBehaviour
 
     void Update()
     {
+        if(isPlayerNearby)
+        {
+            holdTime += Time.deltaTime;
+
+            if (holdTime >= interactionTime)
+            {
+                HandleInteraction();
+            }
+        } else
+        {
+            holdTime = 0f;
+        }
+        /*
         if (isPlayerNearby && hitUnitGroup == EUnitGroup.Allay)
         {
             if (Input.GetKey(KeyCode.Space))
@@ -81,7 +98,7 @@ public class ObjectTrigger : MonoBehaviour
            {
             HandleInteraction();
            }
-        }
+        }*/
     }
 
     private void HandleInteraction()
@@ -94,6 +111,37 @@ public class ObjectTrigger : MonoBehaviour
         else if (myTag == "Unit Trigger") // myTag : Unit 오브젝트 아래의 Trigger의 태그
         {
             InteractUnit();
+        } else if (myTag == "Fixed")  // 중립 유닛 생성 트리거
+    {
+        SpawnNeutralUnit();
+    }
+    }
+
+    void SpawnNeutralUnit()
+    {
+        if(spawnPosition != null)
+        {
+            if(hitUnitGroup == EUnitGroup.Allay)
+            {
+                GameManager.instance.pool.prefabs[GameManager.instance.playerCharacterIndex].GetComponent<NeutralUnit>().Split(2, spawnPosition.transform, EUnitGroup.Allay);
+            } 
+            else if (hitUnitGroup == EUnitGroup.Enemy)
+            {
+                GameManager.instance.pool.prefabs[GameManager.instance.computerCharacterIndex].GetComponent<NeutralUnit>().Split(2, spawnPosition.transform, EUnitGroup.Enemy);
+            }
+            
+            //gameObject.SetActive(false);
+            
+            if(hitUnitGroup == EUnitGroup.Allay)
+            {
+                GameManager.instance.ActivePlayerUnits--;
+            } 
+            else if (hitUnitGroup == EUnitGroup.Enemy)
+            {
+                GameManager.instance.ActiveEnemyUnits--;
+            }
+            
+            holdTime = 0f;
         }
     }
 

@@ -119,7 +119,6 @@ public class EnemyAI : MonoBehaviour
 
         Vector2 direction = (target.position - transform.position).normalized;
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
-        Debug.Log($"이동 방향 : {direction}");
     }
 
     void AttackTarget(Transform target)
