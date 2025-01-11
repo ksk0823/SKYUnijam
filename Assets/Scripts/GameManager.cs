@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
@@ -10,8 +11,16 @@ public class GameManager : MonoBehaviour
 
     public int playerCharacterIndex;
     public int computerCharacterIndex;
+    
+    [Header("Game Control")]
+        public float gameTime;
+        public float firstAngryTime;
+        public float secondAngryTime;
+        public AngryEffect angryEffect;
+        
     [Header("Player Character")]
     public GameObject playerCharacter;
+
     [Header("Computer Character")]
     public GameObject enemyCharacter;
 
@@ -31,19 +40,34 @@ public class GameManager : MonoBehaviour
     public Sprite[] CharacterSprites;
     public Sprite[] NexusSprites;
 
-    
-
     void Awake()
     {
         instance = this;
+
         playerCharacterIndex = PlayerPrefs.GetInt("PlayerCharacter");
         computerCharacterIndex = PlayerPrefs.GetInt("ComputerCharacter");
+
+        firstAngryTime = 15f;
+        secondAngryTime = 30f;
+
         Debug.Log("PlayerCharacter: " + playerCharacterIndex);
         Debug.Log("ComputerCharacter: " + computerCharacterIndex);
 
-        instance = this;
         SetSprite();
+    }
 
+    void Update()
+    {
+        gameTime += Time.deltaTime;
+
+        if (gameTime > firstAngryTime)
+        {
+            // Small Angry Active
+        }
+        else if (gameTime > secondAngryTime)
+        {
+            // Big Angry Active
+        }
     }
 
     void SetSprite()
@@ -53,8 +77,6 @@ public class GameManager : MonoBehaviour
         enemyCharacter.GetComponent<SpriteRenderer>().sprite = CharacterSprites[computerCharacterIndex];
         playerNexus.GetComponent<SpriteRenderer>().sprite = NexusSprites[playerCharacterIndex];
         enemyNexus.GetComponent<SpriteRenderer>().sprite = NexusSprites[computerCharacterIndex];
-        
-
     }
 
     private void EndGame()
