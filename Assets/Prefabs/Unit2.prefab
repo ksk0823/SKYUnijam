@@ -196,7 +196,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &7183785555158097915
 CircleCollider2D:
@@ -207,7 +207,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 3411832182620486813}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 531208c01f3421949883f78c56b0fa5f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

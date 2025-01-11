@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 7030367389591533038}
   nexus: {fileID: 0}
+  interactionTime: 0
 --- !u!1 &3411832182620486813
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +207,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 3411832182620486813}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 531208c01f3421949883f78c56b0fa5f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
