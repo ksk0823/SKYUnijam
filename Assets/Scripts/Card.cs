@@ -127,12 +127,14 @@ public class Card : MonoBehaviour
 
     private void AllySpeedBuff(List<GameObject> units, float value)
     {
+        Debug.Log($"Units : {units}");
+
         foreach (GameObject unit in units)
         {
             NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
             neutralUnit.moveSpeed *= value;
         }    
-        Debug.Log("유닛 이동속도 증가");
+        Debug.Log($"유닛 이동속도 {value} 증가");
     }
 
     private void AllyAttackDamageBuff(List<GameObject> units, float value)
@@ -142,7 +144,7 @@ public class Card : MonoBehaviour
             NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
             // 데미지 적용하기
         }
-        Debug.Log("유닛 데미지 증가");
+        Debug.Log($"유닛 데미지 {value} 증가");
     }
 
     private void AllyHealthBuff(List<GameObject> units, float value)
@@ -152,7 +154,7 @@ public class Card : MonoBehaviour
             NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
             neutralUnit.health *= value;
         }
-        Debug.Log("유닛 체력 증가");
+        Debug.Log($"유닛 체력 {value} 증가");
     }
 
     private void PlayerMineSpeedBuff(GameObject player, float value)
