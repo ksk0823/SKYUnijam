@@ -77,11 +77,30 @@ public class NeutralUnit : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string objTag = collision.transform.tag;
-        if (objTag == "Nexus" || objTag == "Fixed" || objTag == "Enemy")
-            MoveToRandomDirection();
-        else if (objTag == "Border")
+
+        if (objTag == "Nexus" || objTag == "Fixed")
         {
-            currentDirection *= -1;
+            MoveToRandomDirection();
+        }
+
+        else if (objTag == "Border" || objTag == "Enemy")
+        {
+            currentDirection.x *= Random.Range(-0.8f, -1.2f);
+            currentDirection.y *= Random.Range(-0.8f, -1.2f);
+
+            if (objTag == "Enemy")
+            {
+                Damage();
+            }
+        }
+    }
+
+    void Damage()
+    {
+        health--;
+        if (health <= 0)
+        {
+            gameObject.SetActive(false);
         }
     }
 }
