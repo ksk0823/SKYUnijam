@@ -946,6 +946,7 @@ GameObject:
   - component: {fileID: 539580785}
   - component: {fileID: 539580789}
   - component: {fileID: 539580787}
+  - component: {fileID: 539580790}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1133,6 +1134,23 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &539580790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539580782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17bf34e619d8ad74292e437f0bb71243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitGroup: 0
+  index: 0
+  pm: {fileID: 0}
+  neutralUnitPrefab: {fileID: 0}
+  isPlayer: 0
 --- !u!1 &592541300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3828,6 +3846,7 @@ GameObject:
   - component: {fileID: 1984641652}
   - component: {fileID: 1984641651}
   - component: {fileID: 1984641657}
+  - component: {fileID: 1984641658}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Player
@@ -4035,6 +4054,23 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 1984
+--- !u!114 &1984641658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984641650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17bf34e619d8ad74292e437f0bb71243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitGroup: 2
+  index: 0
+  pm: {fileID: 0}
+  neutralUnitPrefab: {fileID: 0}
+  isPlayer: 0
 --- !u!1 &2021945169
 GameObject:
   m_ObjectHideFlags: 0
