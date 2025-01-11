@@ -1,10 +1,10 @@
 using UnityEditor.EditorTools;
 using UnityEngine;
- 
+
 public class NeutralUnit : UnitObject
 {
     [Header("Main Settings")]
-    public int health;
+    public float health;
     public float moveSpeed = 3f;
     public float spawnInterval = 1f;
 
@@ -13,7 +13,7 @@ public class NeutralUnit : UnitObject
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
-    private bool canSpawn = true;
+    private float nextSpawnTime = 0f;
 
     private void Awake()
     {
@@ -33,14 +33,15 @@ public class NeutralUnit : UnitObject
 
     public void Split(int splitTimes, Transform transform, EUnitGroup hitUnitGroup)
     {
-        if (!canSpawn)
-                {
-                    Debug.Log("Spawn is on cooldown.");
-                    return;
-                }
-        
-                StartCoroutine(SpawnCooldown());
-                
+        // 현재 시간이 nextSpawnTime보다 작으면 실행 중단
+        if (Time.time < nextSpawnTime)
+        {
+            Debug.Log("Spawn is on cooldown.");
+            return;
+        }
+
+        nextSpawnTime = Time.time + spawnInterval;
+
         EUnitGroup newUnitGroup = EUnitGroup.Neutral;
         if (hitUnitGroup == EUnitGroup.Neutral)
         {
@@ -59,20 +60,6 @@ public class NeutralUnit : UnitObject
 
         for (int i = 0; i < splitTimes; i++)
         {
-            //GameObject newObject = GameManager.instance.pool.Get(0);
-            //GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
-
-            //if (splitTimes == 1) // 예외처리 코드
-            //{
-            //    Debug.Log("Make only one object");
-
-            //    tempObject = GameManager.instance.pool.Get(0);
-            //    //SpriteRenderer tempSr = tempObject.GetComponent<SpriteRenderer>();
-
-            //    tempObject.transform.position = transform.position + Vector3.up * 0.5f;
-            //    tempObject.transform.rotation = Quaternion.identity;
-            //    tempObject.layer = LayerMask.NameToLayer("Active Unit");
-            //}
             GameObject newObject = null;
             if(newUnitGroup == EUnitGroup.Enemy)
             {
@@ -118,13 +105,6 @@ public class NeutralUnit : UnitObject
             neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
         }
-    }
-
-    private System.Collections.IEnumerator SpawnCooldown()
-    {
-        canSpawn = false;
-        yield return new WaitForSeconds(spawnInterval);
-        canSpawn = true;
     }
 
     void MoveToRandomDirection()
@@ -177,10 +157,10 @@ public class NeutralUnit : UnitObject
             Debug.Log("I'm Dead");
             if(unitGroup == EUnitGroup.Allay)
             {
-                GameManager.instance.pool.prefabs[GameManager.instance.computerCharacterIndex].GetComponent<NeutralUnit>().Split(1, transform, EUnitGroup.Enemy);
+                GameManager.instance.pool.prefabs[GameManager.instance.computerCharacterIndex].GetComponent<NeutralUnit>().Split(2, transform, EUnitGroup.Enemy);
             } else if (unitGroup == EUnitGroup.Enemy)
             {
-                GameManager.instance.pool.prefabs[GameManager.instance.playerCharacterIndex].GetComponent<NeutralUnit>().Split(1, transform, EUnitGroup.Allay);
+                GameManager.instance.pool.prefabs[GameManager.instance.playerCharacterIndex].GetComponent<NeutralUnit>().Split(2, transform, EUnitGroup.Allay);
             }
             gameObject.SetActive(false);
             if(unitGroup == EUnitGroup.Allay)

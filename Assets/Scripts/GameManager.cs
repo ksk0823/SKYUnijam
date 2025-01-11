@@ -17,8 +17,7 @@ public class GameManager : MonoBehaviour
     public float firstAngryTime;
     public float secondAngryTime;
     public AngryEffect angryEffect;
-    public NeutralUnit nexusSpawnUnit; // 빨강이 유닛 스폰하는 빈 오브젝트
-    private Transform spawnPos; // 빨강이 유닛 스폰 위치
+    public GameObject playerNexusRegion;
 
     [Header("Player Character")]
     public GameObject playerCharacter;
@@ -88,7 +87,6 @@ public class GameManager : MonoBehaviour
         if (playerKillCount >= maxPlayerKillCount)
         {
             playerKillCount = 0;
-           // 유닛 스폰 코드 구현
         }
     }
 

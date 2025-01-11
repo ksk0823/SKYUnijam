@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float attackSpeed;
     public float moveSpeed;
     public EUnitGroup unitGroup;
+    public CardManager cardManager;
 
     [Header("Click Attack Settings")]
     public LayerMask enemyLayer;
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     Collider2D coll;
 
     private Vector2 inputVec;
+    private Coroutine triggerCoroutine;
 
     private void Awake()
     {
@@ -101,6 +103,37 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, maxAttackDistance);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Nexus Region")
+        {
+            if (triggerCoroutine != null)
+            {
+                StopCoroutine(triggerCoroutine);
+            }
+
+            triggerCoroutine = StartCoroutine(TriggerTimer());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Nexus Region")
+        {
+            if (triggerCoroutine != null)
+            {
+                StopCoroutine(triggerCoroutine);
+                triggerCoroutine = null;
+            }
+        }
+    }
+
+    private IEnumerator TriggerTimer()
+    {
+        yield return new WaitForSeconds(cardManager.cardInterval);
+        cardManager.showCards = true;
     }
 
     void OnMove(InputValue value)

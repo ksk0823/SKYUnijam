@@ -37,7 +37,7 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void Effect(GameObject player, GameObject unit)
+    public void Effect(GameObject player, List<GameObject> units)
     {
         Debug.Log(data.cardType);
 
@@ -60,15 +60,15 @@ public class Card : MonoBehaviour
                 break;
 
             case CardData.CardType.UnitMoveSpeed:
-                AllySpeedBuff(unit, data.effectValue);
+                AllySpeedBuff(units, data.effectValue);
                 break;
                 
             case CardData.CardType.UnitAttackDamage:
-                AllyAttackDamageBuff(unit, data.effectValue);
+                AllyAttackDamageBuff(units, data.effectValue);
                 break;
 
             case CardData.CardType.UnitHealth:
-                AllyHealthBuff(unit, data.effectValue);
+                AllyHealthBuff(units, data.effectValue);
                 break;
 
             case CardData.CardType.MineSpeed:
@@ -116,27 +116,41 @@ public class Card : MonoBehaviour
 
     private void PlayerAttackCountBuff(GameObject player, float value)
     {
-        Debug.Log($"플레이어 공격 횟수 {value} 증가");
+        Debug.Log($"구현 X");
     }
 
-    private void AllySpeedBuff(GameObject unit, float value)
+    private void AllySpeedBuff(List<GameObject> units, float value)
     {
+        foreach (GameObject unit in units)
+        {
+            NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
+            neutralUnit.moveSpeed *= value;
+        }    
         Debug.Log("유닛 이동속도 증가");
     }
 
-    private void AllyAttackDamageBuff(GameObject unit, float value)
+    private void AllyAttackDamageBuff(List<GameObject> units, float value)
     {
+        foreach (GameObject unit in units)
+        {
+            NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
+            // 데미지 적용하기
+        }
         Debug.Log("유닛 데미지 증가");
     }
 
-    private void AllyHealthBuff(GameObject unit, float value)
+    private void AllyHealthBuff(List<GameObject> units, float value)
     {
+        foreach (GameObject unit in units)
+        {
+            NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
+            neutralUnit.health *= value;
+        }
         Debug.Log("유닛 체력 증가");
     }
 
-    private void PlayerMineSpeedBuff(GameObject unit, float value)
+    private void PlayerMineSpeedBuff(GameObject player, float value)
     {
         Debug.Log("플레이어 채굴속도 감소");
-        // interactionTime을 NeutralUnit에서 관리하고 있음
     }
 }

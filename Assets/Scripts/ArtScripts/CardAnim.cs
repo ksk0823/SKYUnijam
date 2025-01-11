@@ -52,7 +52,7 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         // 카드 효과 오브젝트에 적용
         Card myCard = gameObject.GetComponent<Card>();
         Debug.Log(myCard.name);
-        myCard.Effect(GameManager.instance.playerCharacter, GameManager.instance.enemyCharacter);
+        myCard.Effect(GameManager.instance.playerCharacter, GameManager.instance.playerUnits);
 
         base.transform.DOScale(0.9f,0.1f);
         yield return new WaitForSeconds(0.1f);
