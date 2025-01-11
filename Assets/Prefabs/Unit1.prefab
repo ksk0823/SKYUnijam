@@ -246,6 +246,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitGroup: 0
+<<<<<<< Updated upstream
   health: 8
   moveSpeed: 7.2
+=======
+  health: 2
+  moveSpeed: 7
+  damage: 1
+>>>>>>> Stashed changes
   neutralPrefab: {fileID: 3411832182620486813}
+  spawnInterval: 1

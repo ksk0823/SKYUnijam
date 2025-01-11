@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Click Attack Settings")]
     public LayerMask enemyLayer;
-    public int clickDamage = 10;
+    public float clickDamage = 10;
     public float attackRadius = 2f; // 원형 범위 크기
     public float maxAttackDistance = 5f;
 
