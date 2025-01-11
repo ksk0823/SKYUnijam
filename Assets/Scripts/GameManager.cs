@@ -17,12 +17,18 @@ public class GameManager : MonoBehaviour
     public float firstAngryTime;
     public float secondAngryTime;
     public AngryEffect angryEffect;
+    public NeutralUnit nexusSpawnUnit; // 빨강이 유닛 스폰하는 빈 오브젝트
+    private Transform spawnPos; // 빨강이 유닛 스폰 위치
 
     [Header("Player Character")]
     public GameObject playerCharacter;
+    public int playerKillCount;
+    public int maxPlayerKillCount;
 
     [Header("Computer Character")]
     public GameObject enemyCharacter;
+    public int enemyKillCount;
+    public int maxEnemyKillCount;
 
     [Header("Nexus Object")]
     public GameObject playerNexus;
@@ -45,6 +51,10 @@ public class GameManager : MonoBehaviour
 
         firstAngryTime = 15f;
         secondAngryTime = 30f;
+        playerKillCount = 0;
+        enemyKillCount = 0;
+        maxPlayerKillCount = 0;
+        maxEnemyKillCount = 0;
 
         Debug.Log("PlayerCharacter: " + playerCharacterIndex);
         Debug.Log("ComputerCharacter: " + computerCharacterIndex);
@@ -56,6 +66,9 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
 
+        if (playerCharacterIndex == 0) // 캐릭터 빨강일 때
+            AddNewUnit();
+
         if (gameTime > firstAngryTime)
         {
             // Small Angry Active
@@ -63,6 +76,15 @@ public class GameManager : MonoBehaviour
         else if (gameTime > secondAngryTime)
         {
             // Big Angry Active
+        }
+    }
+
+    void AddNewUnit()
+    {
+        if (playerKillCount >= maxPlayerKillCount)
+        {
+            playerKillCount = 0;
+           // 유닛 스폰 코드 구현
         }
     }
 
