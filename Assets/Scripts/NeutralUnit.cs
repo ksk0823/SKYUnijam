@@ -4,9 +4,10 @@ using UnityEngine;
 public class NeutralUnit : UnitObject
 {
     [Header("Main Settings")]
-    public int health;
+    public float health;
     public float moveSpeed = 3f;
     public float spawnInterval = 1f;
+    public float damage;
 
     [Header("Objects")]
     public GameObject neutralPrefab;
@@ -156,8 +157,9 @@ public class NeutralUnit : UnitObject
                 unitGroup != EUnitGroup.Neutral && 
                 otherUnit.unitGroup != EUnitGroup.Neutral)
             {
-                Damage(1);
-                otherUnit.Damage(1);
+                Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
+                Damage(damage);
+                otherUnit.Damage(damage);
             }
             
             // 충돌 시 방향 전환
@@ -166,7 +168,7 @@ public class NeutralUnit : UnitObject
         }
     }
 
-    public void Damage(int damage)
+    public void Damage(float damage)
     {
         Debug.Log($"Unit Damaged, Damage : {damage}");
         health -= damage;
