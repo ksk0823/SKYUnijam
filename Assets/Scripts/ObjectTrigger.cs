@@ -39,11 +39,21 @@ public class ObjectTrigger : MonoBehaviour
 
             case "Nexus Trigger":
                 interactionTime = 6f;
+                DecreaseInteractionTime(interactionTime);
                 break;
 
             default:
                 interactionTime = 5f;
+                DecreaseInteractionTime(interactionTime);
                 break;
+        }
+    }
+
+    void DecreaseInteractionTime(float time)
+    {
+        if (GameManager.instance.playerCharacterIndex == 1) // 플레이어가 파랑색일 때
+        {
+            time *= 0.7f; // 채굴 속도 30% 감소
         }
     }
 

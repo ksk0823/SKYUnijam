@@ -6,12 +6,14 @@ public class NeutralUnit : UnitObject
     [Header("Main Settings")]
     public int health;
     public float moveSpeed = 3f;
+    public float spawnInterval = 1f;
 
     [Header("Objects")]
     public GameObject neutralPrefab;
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
+    private bool canSpawn = true;
 
     private void Awake()
     {
@@ -31,6 +33,14 @@ public class NeutralUnit : UnitObject
 
     public void Split(int splitTimes, Transform transform, EUnitGroup hitUnitGroup)
     {
+        if (!canSpawn)
+                {
+                    Debug.Log("Spawn is on cooldown.");
+                    return;
+                }
+        
+                StartCoroutine(SpawnCooldown());
+                
         EUnitGroup newUnitGroup = EUnitGroup.Neutral;
         if (hitUnitGroup == EUnitGroup.Neutral)
         {
@@ -49,6 +59,7 @@ public class NeutralUnit : UnitObject
 
         for (int i = 0; i < splitTimes; i++)
         {
+            GameObject newObject = GameManager.instance.pool.Get(0);
             //GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
 
             //if (splitTimes == 1) // 예외처리 코드
@@ -103,9 +114,17 @@ public class NeutralUnit : UnitObject
                 child.gameObject.tag = "Split Disable";
             }
 
+            NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
             neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
         }
+    }
+
+    private System.Collections.IEnumerator SpawnCooldown()
+    {
+        canSpawn = false;
+        yield return new WaitForSeconds(spawnInterval);
+        canSpawn = true;
     }
 
     void MoveToRandomDirection()
@@ -174,27 +193,3 @@ public class NeutralUnit : UnitObject
         }
     }
 }
-
-    //public void SetTarget(Transform enemy)
-    //{
-    //    target = enemy;
-    //}
-
-    //private Transform FindClosestEnemy()
-    //{
-    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-    //    Transform closest = null;
-    //    float closestDistance = Mathf.Infinity;
-
-    //    foreach (GameObject enemy in enemies)
-    //    {
-    //        float distance = Vector3.Distance(transform.position, enemy.transform.position);
-    //        if (distance < closestDistance)
-    //        {
-    //            closestDistance = distance;
-    //            closest = enemy.transform;
-    //        }
-    //    }
-
-    //    return closest;
-    //}

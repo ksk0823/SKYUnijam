@@ -11,8 +11,10 @@ public class Enemy : MonoBehaviour
     public void Damage(int damage)
     {
         health -= damage;
+
         if (health <= 0)
         {
+            GameManager.instance.playerKillCount++;
             Debug.Log("Enemy Dead");
             gameObject.SetActive(false);
             unitPrefab.Split(1, transform, EUnitGroup.Allay);
