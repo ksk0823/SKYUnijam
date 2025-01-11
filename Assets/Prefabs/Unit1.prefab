@@ -185,7 +185,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0b08d15ea4a3e084abcfa1b6f904c8c2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -245,7 +245,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 8
   attackSpeed: 0
-  moveSpeed: 1
+  moveSpeed: 3
   neutralPrefab: {fileID: 3411832182620486813}
   target: {fileID: 0}
-  _objectTrigger: {fileID: 2847498956555154540}

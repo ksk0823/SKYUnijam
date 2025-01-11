@@ -14,6 +14,7 @@ public class NeutralUnit : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D coll;
     private string myTag;
+    private Vector2 currentDirection;
 
     private void Awake()
     {
@@ -21,7 +22,11 @@ public class NeutralUnit : MonoBehaviour
         coll = GetComponent<Collider2D>();
         myTag = gameObject.tag;
         rb.bodyType = RigidbodyType2D.Kinematic;
-     
+    }
+
+    private void Start()
+    {
+        currentDirection = Vector2.zero;
     }
 
     void Update()
@@ -35,7 +40,7 @@ public class NeutralUnit : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = Vector2.zero;
+        rb.velocity = currentDirection * moveSpeed;
     }
 
     public void Split()
@@ -59,31 +64,49 @@ public class NeutralUnit : MonoBehaviour
             }
 
             NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
-            neutralScript.SetTarget(FindClosestEnemy());
+            //neutralScript.SetTarget(FindClosestEnemy());
+            neutralScript.MoveToRandomDirection();
         }
     }
 
-    public void SetTarget(Transform enemy)
+    void MoveToRandomDirection()
     {
-        target = enemy;
+        currentDirection = Random.insideUnitCircle.normalized;
     }
 
-    private Transform FindClosestEnemy()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        Transform closest = null;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (GameObject enemy in enemies)
+        string objTag = collision.transform.tag;
+        if (objTag == "Nexus" || objTag == "Fixed" || objTag == "Enemy")
+            MoveToRandomDirection();
+        else if (objTag == "Border")
         {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closest = enemy.transform;
-            }
+            currentDirection *= -1;
         }
-
-        return closest;
     }
 }
+
+    //public void SetTarget(Transform enemy)
+    //{
+    //    target = enemy;
+    //}
+
+    //private Transform FindClosestEnemy()
+    //{
+    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    //    Transform closest = null;
+    //    float closestDistance = Mathf.Infinity;
+
+    //    foreach (GameObject enemy in enemies)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, enemy.transform.position);
+    //        if (distance < closestDistance)
+    //        {
+    //            closestDistance = distance;
+    //            closest = enemy.transform;
+    //        }
+    //    }
+
+    //    return closest;
+    //}
+

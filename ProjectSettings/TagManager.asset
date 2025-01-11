@@ -10,6 +10,8 @@ TagManager:
   - Fixed
   - Un Fixed
   - Split Disable
+  - Border
+  - Nexus
   layers:
   - Default
   - TransparentFX
