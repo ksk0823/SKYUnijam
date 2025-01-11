@@ -87,8 +87,13 @@ public class Card : MonoBehaviour
 
         if (stats != null)
         {
-            stats.moveSpeed *= value;
-            Debug.Log($"플레이어 속도 {value} 증가");
+            if (stats.moveSpeed < 10)
+            {
+                stats.moveSpeed *= value;
+                Debug.Log($"플레이어 속도 {value} 증가");
+            }
+            else
+                Debug.Log("님너무빠름");
         }
     }
 
@@ -116,6 +121,13 @@ public class Card : MonoBehaviour
 
     private void PlayerAttackCountBuff(GameObject player, float value)
     {
+        var stats = player.GetComponent<PlayerMovement>();
+
+        if (stats != null)
+        {
+            stats.clickDamage += value;
+        }
+
         Debug.Log($"플레이어 공격 횟수 {value} 증가");
     }
 

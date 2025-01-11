@@ -16,4 +16,4 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   cardName: "\uC18D\uACF5"
   description: "\uD50C\uB808\uC774\uC5B4 \uACF5\uACA9\uC18D\uB3C4 \uC99D\uAC00"
-  effectValue: 1.2
+  effectValue: 0.8

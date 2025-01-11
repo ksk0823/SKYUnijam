@@ -12,9 +12,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Click Attack Settings")]
     public LayerMask enemyLayer;
-    public int clickDamage = 10;
-    public float attackRadius = 2f; // 원형 범위 크기
+    public float clickDamage;
+    public float attackRadius = 2f;
     public float maxAttackDistance = 5f;
+
+    [Header("Cooldown Settings")]
+    public float cooldownTime = 2f;  // 쿨타임 (2초)
+    private float lastAttackTime = -Mathf.Infinity;  // 마지막 공격 시간
 
     [Header("Objects")]
     Rigidbody2D rb;
@@ -42,17 +46,26 @@ public class PlayerMovement : MonoBehaviour
 
     void ClickAttack()
     {
+        // 쿨타임 확인
+        if (Time.time - lastAttackTime < attackSpeed)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Input.mousePosition;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            worldPosition.z = 0f; // 2D 환경에서 Z축 제거
+            worldPosition.z = 0f;
 
             float distanceToPlayer = Vector3.Distance(transform.position, worldPosition);
 
             if (distanceToPlayer <= maxAttackDistance)
             {
                 DealDamageInArea(worldPosition);
+
+                // 공격 성공 시 마지막 공격 시간 갱신
+                lastAttackTime = Time.time;
             }
         }
     }
@@ -63,7 +76,6 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider2D collider in hitColliders)
         {
-            //Enemy enemy = collider.GetComponent<Enemy>();
             NeutralUnit enemy = collider.GetComponent<NeutralUnit>();
 
             if (enemy != null && enemy.unitGroup != unitGroup)
@@ -97,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (transform != null)
         {
-            // 플레이어 기준 최대 공격 거리 원 표시
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, maxAttackDistance);
         }
@@ -105,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        //Debug.Log("OnMove");
         inputVec = value.Get<Vector2>();
     }
 }
