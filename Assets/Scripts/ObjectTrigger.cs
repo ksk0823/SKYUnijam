@@ -35,7 +35,7 @@ public class ObjectTrigger : MonoBehaviour
                 interactionTime = 3f;
                 break;
 
-            case "Nexus Trigger": // 40초로 올리기
+            case "Nexus Trigger":
                 interactionTime = GameManager.instance.nexus.interactionTime;
                 break;
 
@@ -87,7 +87,6 @@ public class ObjectTrigger : MonoBehaviour
     void InteractUnit() 
     {
         Debug.Log("유닛 상호작용 실행");
-        // 플레이어 유닛 상호작용 로직 추가
 
         unitPrefab.Split();
         Destroy(transform.parent.gameObject);
@@ -98,24 +97,6 @@ public class ObjectTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = true;
-        }
-        else if (other.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            Battle(enemy);
-        }
-    }
-
-    void Battle(Enemy enemy)
-    {
-        NeutralUnit parent = transform.parent.gameObject.GetComponent<NeutralUnit>();
-        if (parent.health > enemy.health)
-        {
-            Destroy(enemy.gameObject);
-        }
-        else
-        {
-            Destroy(parent.gameObject);
         }
     }
 

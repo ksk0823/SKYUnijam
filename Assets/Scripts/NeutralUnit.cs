@@ -5,7 +5,6 @@ public class NeutralUnit : MonoBehaviour
 {
     [Header("Main Settings")]
     public int health = 8;
-    public float attackSpeed;
     public float moveSpeed = 3f;
 
     [Header("Objects")]
@@ -13,15 +12,11 @@ public class NeutralUnit : MonoBehaviour
     public Transform target;
 
     private Rigidbody2D rb;
-    private Collider2D coll;
-    private string myTag;
     private Vector2 currentDirection;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<Collider2D>();
-        myTag = gameObject.tag;
         rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
@@ -79,6 +74,7 @@ public class NeutralUnit : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        GameObject collObj = collision.gameObject;
         string objTag = collision.transform.tag;
 
         if (objTag == "Fixed")
@@ -94,15 +90,19 @@ public class NeutralUnit : MonoBehaviour
             if (objTag == "Enemy")
             {
                 Damage(1);
+                collObj.GetComponent<Enemy>().Damage(1);
             }
         }
     }
 
     public void Damage(int damage)
     {
+        Debug.Log($"Unit Damaged, Damage : {damage}");
         health -= damage;
+
         if (health <= 0)
         {
+            Debug.Log("I'm Dead");
             gameObject.SetActive(false);
         }
     }

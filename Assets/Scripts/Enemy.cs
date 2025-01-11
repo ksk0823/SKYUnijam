@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            Debug.Log("Enemy Dead");
             gameObject.SetActive(false);
         }
     }
