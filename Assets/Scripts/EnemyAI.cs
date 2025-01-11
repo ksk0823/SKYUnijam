@@ -24,11 +24,17 @@ public class EnemyAI : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         unitGroup = GetComponent<UnitObject>().unitGroup;
+        StartCoroutine(WaitEffect());
     }
 
     private void Update()
     {
         DecideNextAction();
+    }
+
+    IEnumerator WaitEffect()
+    {
+        yield return new WaitForSeconds(3f);
     }
 
     void DecideNextAction()

@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         unitGroup = GetComponent<PlayerObject>().unitGroup;
+        StartCoroutine(WaitEffect());
     }
 
     private void Update()
@@ -42,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 nextVec = inputVec * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + nextVec);
+    }
+    IEnumerator WaitEffect()
+    {
+        yield return new WaitForSeconds(3f);
     }
 
     void ClickAttack()
