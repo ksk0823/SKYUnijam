@@ -56,7 +56,7 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         yield return new WaitForSeconds(0.1f);
         transform.DOScale(1f,0.1f);
         yield return new WaitForSeconds(0.1f);
-        transform.DOLocalMoveY(-500,0.2f);
+        transform.DOLocalMoveY(100,0.2f);
         material.DOFloat(0f,"_Alive", 0.2f);
 
         yield return null;
