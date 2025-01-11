@@ -3405,7 +3405,7 @@ PrefabInstance:
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
     - target: {fileID: 7303649897559418901, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: interactionTime
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5403962469986306554, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
@@ -3842,13 +3842,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 0
-  moveSpeed: 5
+  moveSpeed: 3
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  clickDamage: 10
-  attackRadius: 2
-  maxAttackDistance: 5
+  clickDamage: 1
+  attackRadius: 0.5
+  maxAttackDistance: 4
 --- !u!114 &1984641652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4382,7 +4382,7 @@ PrefabInstance:
       objectReference: {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
     - target: {fileID: 7303649897559418901, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
       propertyPath: interactionTime
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5403962469986306554, guid: 7085e8bf7a1debf4c8b81cc3113e8716, type: 3}
