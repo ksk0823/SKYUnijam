@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Enemy Dead");
             gameObject.SetActive(false);
-            unitPrefab.Split(1, transform);
+            unitPrefab.Split(1, transform, EUnitGroup.Allay);
         }
     }
 }

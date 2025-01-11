@@ -14,6 +14,8 @@ public class ObjectTrigger : MonoBehaviour
     private float holdTime = 0f;
     private float interactionTime;
 
+    private EUnitGroup hitUnitGroup;
+
     private void Awake()
     {
         myTag = gameObject.tag;
@@ -37,7 +39,7 @@ public class ObjectTrigger : MonoBehaviour
                 break;
 
             case "Nexus Trigger":
-                interactionTime = GameManager.instance.nexus.interactionTime;
+                interactionTime = 6f;
                 break;
 
             default:
@@ -90,7 +92,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         Debug.Log("유닛 상호작용 실행");
 
-        unitPrefab.Split(2, transform); // 한 개일 때 발생하는 버그 수정해야 함
+        unitPrefab.Split(2, transform, hitUnitGroup); // 한 개일 때 발생하는 버그 수정해야 함
         Destroy(transform.parent.gameObject);
     }
 
@@ -99,6 +101,7 @@ public class ObjectTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = true;
+            hitUnitGroup = other.GetComponent<UnitObject>().unitGroup;
         }
     }
 
@@ -107,6 +110,7 @@ public class ObjectTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
+            hitUnitGroup = EUnitGroup.Neutral;
         }
     }
 }

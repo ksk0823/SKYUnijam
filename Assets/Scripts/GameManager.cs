@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Nexus nexus;
 
-    private int playerCharacterIndex;
-    private int computerCharacterIndex;
+    public int playerCharacterIndex;
+    public int computerCharacterIndex;
     [Header("Player Character")]
     public GameObject playerCharacter;
     [Header("Computer Character")]

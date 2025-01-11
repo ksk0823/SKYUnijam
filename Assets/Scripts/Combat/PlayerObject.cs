@@ -19,6 +19,8 @@ public class PlayerObject : UnitObject
         if (!isPlayer)
         {
            Init(EUnitGroup.Enemy);
+           //GetComponent<PlayerMovement>().enabled = false;
+           //GetComponent<PlayerInput>().enabled = false;
         } else
         {
             Init(EUnitGroup.Allay);
