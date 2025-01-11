@@ -34,16 +34,19 @@ public class NeutralUnit : MonoBehaviour
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < splitTimes; i++)
         {
-            GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
+            //GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
 
-            if (splitTimes == 1)
-            {
-                Debug.Log("Make only one object");
-                tempObject = GameManager.Instantiate( //transform.position은 neutralPrefab의 좌표인 (0, 0, 0)
-                    neutralPrefab, transform.position, Quaternion.identity);
-                //tempObject.transform.position = transform.position + Vector3.up * 0.5f;
-                //tempObject.transform.rotation = Quaternion.identity;
-            }
+            //if (splitTimes == 1) // 예외처리 코드
+            //{
+            //    Debug.Log("Make only one object");
+
+            //    tempObject = GameManager.instance.pool.Get(0);
+            //    //SpriteRenderer tempSr = tempObject.GetComponent<SpriteRenderer>();
+
+            //    tempObject.transform.position = transform.position + Vector3.up * 0.5f;
+            //    tempObject.transform.rotation = Quaternion.identity;
+            //    tempObject.layer = LayerMask.NameToLayer("Active Unit");
+            //}
 
             GameObject newObject = GameManager.instance.pool.Get(0);
             newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
@@ -65,12 +68,8 @@ public class NeutralUnit : MonoBehaviour
             //neutralScript.SetTarget(FindClosestEnemy());
             neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
-
-            if (!tempObject)
-                Debug.Log("Adios");
-                Destroy(tempObject);
         }
-    }
+    }   
 
     void MoveToRandomDirection()
     {

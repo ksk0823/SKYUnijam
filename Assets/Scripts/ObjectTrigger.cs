@@ -7,6 +7,7 @@ public class ObjectTrigger : MonoBehaviour
 {
     [Header("Objects")]
     public NeutralUnit unitPrefab;
+    public Nexus nexus;
 
     private bool isPlayerNearby = false;
     private string myTag;
@@ -82,6 +83,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         Debug.Log("넥서스 상호작용 실행");
         // 플레이어 넥서스 상호작용 로직 추가
+        nexus.ShowCardUI();
     }
 
     void InteractUnit() 
