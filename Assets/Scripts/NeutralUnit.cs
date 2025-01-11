@@ -137,6 +137,11 @@ public class NeutralUnit : UnitObject
         }
         else if (objTag == "Nexus" || objTag == "Border")
         {
+            if(objTag == "Nexus")
+                {
+                    collObj.GetComponent<Nexus>().Damage(damage);
+                    gameObject.SetActive(false);
+                }
             currentDirection.x *= Random.Range(-0.8f, -1.2f);
             currentDirection.y *= Random.Range(-0.8f, -1.2f);
         }
@@ -150,9 +155,17 @@ public class NeutralUnit : UnitObject
                 unitGroup != EUnitGroup.Neutral && 
                 otherUnit.unitGroup != EUnitGroup.Neutral)
             {
-                Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
-                Damage(damage);
-                otherUnit.Damage(damage);
+                // 넥서스 데미지 주기
+                if(objTag == "Nexus")
+                {
+                    collObj.GetComponent<Nexus>().Damage(damage);
+                    gameObject.SetActive(false);
+                } else
+                {
+                    Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
+                    Damage(damage);
+                    otherUnit.Damage(damage);
+                }
             }
             
             // 충돌 시 방향 전환

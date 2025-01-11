@@ -1009,6 +1009,7 @@ MonoBehaviour:
   unitGroup: 2
   health: 10000
   interactionTime: 0
+  healthText: {fileID: 1576613132}
   isPlayer: 0
 --- !u!1 &409821766
 GameObject:
@@ -2957,6 +2958,7 @@ MonoBehaviour:
   unitGroup: 0
   health: 10000
   interactionTime: 0
+  healthText: {fileID: 354590758}
   isPlayer: 1
 --- !u!4 &1406246261 stripped
 Transform:

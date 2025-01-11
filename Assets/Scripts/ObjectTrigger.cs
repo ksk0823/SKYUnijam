@@ -70,6 +70,7 @@ public class ObjectTrigger : MonoBehaviour
             if (holdTime >= interactionTime)
             {
                 HandleInteraction();
+                holdTime = 0f;
             }
         } else
         {
