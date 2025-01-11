@@ -13,9 +13,13 @@ public class Nexus : MonoBehaviour
     public GameObject player;
     public GameObject unit;
 
-    private void Awake()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.tag == "Enemy")
+        {
+            health--;
+            Debug.Log($"Nexus Health : {health}");
+        }
     }
 
     public void ShowCardUI()
