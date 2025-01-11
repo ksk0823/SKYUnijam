@@ -34,13 +34,6 @@ public class NeutralUnit : UnitObject
 
     public void Split(int splitTimes, Transform transform, EUnitGroup hitUnitGroup)
     {
-        if (!canSpawn)
-                {
-                    Debug.Log("Spawn is on cooldown.");
-                    return;
-                }
-        
-        StartCoroutine(SpawnCooldown());
                 
         EUnitGroup newUnitGroup = EUnitGroup.Neutral;
         if (hitUnitGroup == EUnitGroup.Neutral)
