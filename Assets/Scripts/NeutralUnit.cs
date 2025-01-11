@@ -39,10 +39,12 @@ public class NeutralUnit : UnitObject
         else if (hitUnitGroup == EUnitGroup.Allay)
         {
             newUnitGroup = EUnitGroup.Allay;
+            GameManager.instance.ActivePlayerUnits += splitTimes;
         }
         else if (hitUnitGroup == EUnitGroup.Enemy)
         {
             newUnitGroup = EUnitGroup.Enemy;
+            GameManager.instance.ActiveEnemyUnits += splitTimes;
         }
 
         for (int i = 0; i < splitTimes; i++)
@@ -162,6 +164,13 @@ public class NeutralUnit : UnitObject
                 GameManager.instance.pool.prefabs[GameManager.instance.playerCharacterIndex].GetComponent<NeutralUnit>().Split(1, transform, EUnitGroup.Allay);
             }
             gameObject.SetActive(false);
+            if(unitGroup == EUnitGroup.Allay)
+            {
+                GameManager.instance.ActivePlayerUnits--;
+            } else if (unitGroup == EUnitGroup.Enemy)
+            {
+                GameManager.instance.ActiveEnemyUnits--;
+            }
         }
     }
 }

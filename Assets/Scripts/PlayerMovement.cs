@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Main Settings")]
     public float attackSpeed;
     public float moveSpeed;
+    public EUnitGroup unitGroup;
 
     [Header("Click Attack Settings")]
     public LayerMask enemyLayer;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+        unitGroup = GetComponent<PlayerObject>().unitGroup;
     }
 
     private void Update()
@@ -61,10 +63,12 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider2D collider in hitColliders)
         {
-            Enemy enemy = collider.GetComponent<Enemy>();
+            //Enemy enemy = collider.GetComponent<Enemy>();
+            NeutralUnit enemy = collider.GetComponent<NeutralUnit>();
 
-            if (enemy != null)
+            if (enemy != null && enemy.unitGroup != unitGroup)
             {
+                Debug.Log($"공격 대상 : {enemy.unitGroup}");
                 enemy.Damage(clickDamage);
             }
         }

@@ -49,7 +49,7 @@ public class ObjectTrigger : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNearby)
+        if (isPlayerNearby && hitUnitGroup == EUnitGroup.Allay)
         {
             if (Input.GetKey(KeyCode.Space))
             {
@@ -64,6 +64,13 @@ public class ObjectTrigger : MonoBehaviour
             {
                 holdTime = 0f;
             }
+        } else if (isPlayerNearby && hitUnitGroup == EUnitGroup.Enemy)
+        {
+           holdTime += Time.deltaTime;
+           if(holdTime >= interactionTime)
+           {
+            HandleInteraction();
+           }
         }
     }
 
@@ -85,6 +92,14 @@ public class ObjectTrigger : MonoBehaviour
         Debug.Log("넥서스 상호작용 실행");
         // 플레이어 넥서스 상호작용 로직 추가
         //nexus.ShowCardUI();
+        if(transform.parent.gameObject.GetComponent<UnitObject>().unitGroup == EUnitGroup.Allay)
+        {
+            GameManager.instance.playerNexusInteractionCount++;
+        }
+        else if(transform.parent.gameObject.GetComponent<UnitObject>().unitGroup == EUnitGroup.Enemy)
+        {
+            GameManager.instance.enemyNexusInteractionCount++;
+        }
     }
 
     void InteractUnit() 

@@ -18,10 +18,14 @@ public class GameManager : MonoBehaviour
     [Header("Nexus Object")]
     public GameObject playerNexus;
     public GameObject enemyNexus;
+    public int playerNexusInteractionCount = 0;
+    public int enemyNexusInteractionCount = 0;
 
     [Header("Units Object")]
     public List<GameObject> playerUnits = new List<GameObject>();
+    public int ActivePlayerUnits = 0;
     public List<GameObject> enemyUnits = new List<GameObject>();
+    public int ActiveEnemyUnits = 0;
 
     [Header("Character Sprites")]
     public Sprite[] CharacterSprites;
