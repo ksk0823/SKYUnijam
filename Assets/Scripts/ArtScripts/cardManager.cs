@@ -51,16 +51,16 @@ public class CardManager : MonoBehaviour
             if (i < selectedCards.Count)
             {
                 cardSlots[i].data = selectedCards[i];
-                ApplyCardToUI(cardSlots[i], selectedCards[i]);
+                ApplyCardUI(cardSlots[i], selectedCards[i]);
             }
         }
     }
-
-    private void ApplyCardToUI(Card card, CardData data)
+    
+    private void ApplyCardUI(Card card, CardData data)
     {
         card.SetCardData(data);
 
-        Debug.Log($"카드 {data.cardName}가 UI에 적용됨");
+        Debug.Log($"카드 {data.cardName} UI 적용됨");
     }
 
     public void dissolveCards()

@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d92acae4a96e5449ae25c5b4c81920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   cardNameText: {fileID: 0}
   cardDescriptionText: {fileID: 0}
 --- !u!1 &354590756
@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6a0ec1e63ced34bbe0740d383d1966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSpeed: 0
+  attackSpeed: 3
   moveSpeed: 5
   enemyLayer:
     serializedVersion: 2
@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d92acae4a96e5449ae25c5b4c81920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   cardNameText: {fileID: 0}
   cardDescriptionText: {fileID: 0}
 --- !u!114 &592541303
@@ -3044,7 +3044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d92acae4a96e5449ae25c5b4c81920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   cardNameText: {fileID: 0}
   cardDescriptionText: {fileID: 0}
 --- !u!114 &1649249510

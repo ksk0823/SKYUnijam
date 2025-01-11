@@ -16,17 +16,17 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // StartCoroutine(click());
+         StartCoroutine(click());
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.DOScale(1.1f,0.2f);
+        base.transform.DOScale(1.1f,0.2f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOScale(1f,0.2f);
+        base.transform.DOScale(1f,0.2f);
     }
 
     void Start()
@@ -42,17 +42,23 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if(Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
         }
     }
+
     public IEnumerator click()
     {
         clicked = true;
-        transform.DOScale(0.9f,0.1f);
+
+        // 카드 효과 오브젝트에 적용
+        Card myCard = gameObject.GetComponent<Card>();
+        Debug.Log(myCard.name);
+        myCard.Effect(GameManager.instance.playerCharacter, GameManager.instance.enemyCharacter);
+
+        base.transform.DOScale(0.9f,0.1f);
         yield return new WaitForSeconds(0.1f);
-        transform.DOScale(1f,0.1f);
+        base.transform.DOScale(1f,0.1f);
         yield return new WaitForSeconds(0.1f);
-        transform.DOLocalMoveY(-500,0.2f);
+        base.transform.DOLocalMoveY(100,0.2f);
         material.DOFloat(0f,"_Alive", 0.2f);
 
         yield return null;
@@ -60,6 +66,7 @@ public class CardAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Init()
     {
+        base.transform.DOLocalMoveY(-100,0.2f);
         material.SetFloat("_Alive", 1f);
         material.SetFloat("_cutoffHeight", 0f);
     }

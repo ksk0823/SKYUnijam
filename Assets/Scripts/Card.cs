@@ -25,7 +25,7 @@ public class Card : MonoBehaviour
             cardNameText.text = data.cardName;
             cardNameText.color = Color.white;
             cardNameText.alpha = 1f;
-            Debug.Log($"Card Name : {cardNameText.text}");
+            //Debug.Log($"Card Name : {cardNameText.text}");
         }
 
         if (cardDescriptionText != null)
@@ -33,12 +33,14 @@ public class Card : MonoBehaviour
             cardDescriptionText.text = data.description;
             cardDescriptionText.color = Color.white;
             cardDescriptionText.alpha = 1f;
-            Debug.Log($"Desciption : {cardDescriptionText.text}");
+            //Debug.Log($"Desciption : {cardDescriptionText.text}");
         }
     }
 
     public void Effect(GameObject player, GameObject unit)
     {
+        Debug.Log(data.cardType);
+
         switch (data.cardType)
         {
             case CardData.CardType.MoveSpeed:
@@ -53,9 +55,9 @@ public class Card : MonoBehaviour
                 PlayerAttackRangeBuff(player, data.effectValue);
                 break;
 
-            //case CardData.CardType.AttackCount:
-            //    PlayerAttackCountBuff(player, data.effectValue);
-            //    break;
+            case CardData.CardType.AttackCount:
+                PlayerAttackCountBuff(player, data.effectValue);
+                break;
 
             case CardData.CardType.UnitMoveSpeed:
                 AllySpeedBuff(unit, data.effectValue);
@@ -112,16 +114,10 @@ public class Card : MonoBehaviour
         }
     }
 
-    //private void PlayerAttackCountBuff(GameObject player, float value)
-    //{
-    //    var stats = player.GetComponent<PlayerMovement>();
-
-    //    if (stats != null)
-    //    {
-    //        stats.attackCount += (int)value;
-    //        Debug.Log($"Player attack count increased by {(int)value}");
-    //    }
-    //}
+    private void PlayerAttackCountBuff(GameObject player, float value)
+    {
+        Debug.Log($"플레이어 공격 횟수 {value} 증가");
+    }
 
     private void AllySpeedBuff(GameObject unit, float value)
     {
