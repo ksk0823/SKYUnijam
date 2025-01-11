@@ -9,7 +9,6 @@ public class NeutralUnit : MonoBehaviour
 
     [Header("Objects")]
     public GameObject neutralPrefab;
-    public Transform target;
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
@@ -25,25 +24,27 @@ public class NeutralUnit : MonoBehaviour
         currentDirection = Vector2.zero;
     }
 
-    void Update()
-    {
-        if (target != null)
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
-    }
-
     private void FixedUpdate()
     {
         rb.velocity = currentDirection * moveSpeed;
     }
 
-    public void Split()
+    public void Split(int splitTimes, Transform transform)
     {
         // 분열된 두 개의 오브젝트 생성
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < splitTimes; i++)
         {
+            GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
+
+            if (splitTimes == 1)
+            {
+                Debug.Log("Make only one object");
+                tempObject = GameManager.Instantiate( //transform.position은 neutralPrefab의 좌표인 (0, 0, 0)
+                    neutralPrefab, transform.position, Quaternion.identity);
+                //tempObject.transform.position = transform.position + Vector3.up * 0.5f;
+                //tempObject.transform.rotation = Quaternion.identity;
+            }
+
             GameObject newObject = GameManager.instance.pool.Get(0);
             newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
             newObject.transform.rotation = Quaternion.identity;
@@ -64,6 +65,10 @@ public class NeutralUnit : MonoBehaviour
             //neutralScript.SetTarget(FindClosestEnemy());
             neutralScript.health = 8;
             neutralScript.MoveToRandomDirection();
+
+            if (!tempObject)
+                Debug.Log("Adios");
+                Destroy(tempObject);
         }
     }
 

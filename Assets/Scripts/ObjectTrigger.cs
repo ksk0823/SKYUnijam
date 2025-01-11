@@ -88,7 +88,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         Debug.Log("유닛 상호작용 실행");
 
-        unitPrefab.Split();
+        unitPrefab.Split(2, transform); // 한 개일 때 발생하는 버그 수정해야 함
         Destroy(transform.parent.gameObject);
     }
 
