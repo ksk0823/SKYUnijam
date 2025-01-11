@@ -12,7 +12,6 @@ public class NeutralUnit : UnitObject
 
     [Header("Objects")]
     public GameObject neutralPrefab;
-    public Transform target;
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
@@ -40,16 +39,7 @@ public class NeutralUnit : UnitObject
 
     private void Start()
     {
-        currentDirection = Vector2.zero;
-    }
-
-    void Update()
-    {
-        if (target != null)
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
+        //currentDirection = Vector2.zero;
     }
 
     private void FixedUpdate()
@@ -57,17 +47,22 @@ public class NeutralUnit : UnitObject
         rb.velocity = currentDirection * moveSpeed;
     }
 
-    public void Split()
+    public void Split(int splitTimes, Transform transform)
     {
-        //if (!PhotonNetwork.IsMasterClient) return;
-        
-        for (int i = 0; i < 2; i++)
+        // 분열된 두 개의 오브젝트 생성
+        for (int i = 0; i < splitTimes; i++)
         {
+            GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
             Vector3 spawnPosition = transform.position + Vector3.up * 0.5f * i;
+
+            if (splitTimes == 1)
+            {
+                //tempObject = PhotonNetwork.Instantiate("Unit"+index.ToString(), spawnPosition, Quaternion.identity);
+            }
+
             GameObject newObject = PhotonNetwork.Instantiate("Unit"+index.ToString(), spawnPosition, Quaternion.identity);
-            
-            Collider2D newColl = newObject.GetComponent<Collider2D>();
-            Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
+            //newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
+            //newObject.transform.rotation = Quaternion.identity;
             
             // RPC를 통해 새로 생성된 오브젝트의 속성을 설정
             PhotonView newPV = newObject.GetComponent<PhotonView>();
@@ -90,10 +85,10 @@ public class NeutralUnit : UnitObject
             CombatMain.Instance.enemyUnits.Add(gameObject);
         }
         Collider2D coll = GetComponent<Collider2D>();
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         
         coll.isTrigger = false;
-        rb.isKinematic = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         gameObject.layer = LayerMask.NameToLayer("Active Unit");
         gameObject.tag = "Un Fixed";
         foreach (Transform child in transform) // Unit 오브젝트 아래의 Trigger의 태그 변경
@@ -105,6 +100,7 @@ public class NeutralUnit : UnitObject
         //SetTarget(FindClosestEnemy());
         health = 8;
         MoveToRandomDirection();
+        
     }
 
     void MoveToRandomDirection()
@@ -137,7 +133,6 @@ public class NeutralUnit : UnitObject
 
     public void Damage(int damage)
     {
-        Debug.Log($"Unit Damaged, Damage : {damage}");
         health -= damage;
 
         if (health <= 0)
@@ -146,6 +141,7 @@ public class NeutralUnit : UnitObject
             gameObject.SetActive(false);
         }
     }
+    
 }
 
     //public void SetTarget(Transform enemy)

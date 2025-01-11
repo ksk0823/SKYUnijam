@@ -271,11 +271,10 @@ MonoBehaviour:
   unitGroup: 0
   pv: {fileID: 0}
   index: 1
-  health: 8
-  attackSpeed: 0
-  moveSpeed: 1
+  isFirst: 0
+  health: 3
+  moveSpeed: 3
   neutralPrefab: {fileID: 3411832182620486813}
-  target: {fileID: 0}
 --- !u!114 &743106907408215642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +290,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:

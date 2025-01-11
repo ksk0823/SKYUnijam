@@ -28,8 +28,8 @@ public class CombatMain : MonoBehaviourPunCallbacks
     
     private void Awake()
     {
-        PhotonNetwork.SendRate = 20; // 초당 20번 데이터 전송
-        PhotonNetwork.SerializationRate = 10; // 초당 10번 데이터 동기화
+        PhotonNetwork.SendRate = 15; // 20에서 15로 감소
+        PhotonNetwork.SerializationRate = 8; // 10에서 8로 감소
 
         _audioSource = GetComponent<AudioSource>();
 
@@ -155,7 +155,7 @@ public class CombatMain : MonoBehaviourPunCallbacks
         }
         else
         {
-            spawnPosition = new Vector3(8.21f, 3.5f, 0);   // Player 2 위치
+            spawnPosition = new Vector3(3.21f, 3.5f, 0);   // Player 2 위치
             for (int i = 0; i < 6; i++)
             {   
                 

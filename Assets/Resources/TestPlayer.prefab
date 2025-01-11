@@ -197,6 +197,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSpeed: 0
   moveSpeed: 5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  clickDamage: 10
+  attackRadius: 2
+  maxAttackDistance: 5
 --- !u!114 &7861826173078990005
 MonoBehaviour:
   m_ObjectHideFlags: 0
