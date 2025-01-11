@@ -8,15 +8,16 @@ public class Nexus : UnitObject
     public int health;
     public int interactionTime;
 
-    protected override void Awake()
+    public bool isPlayer;
+
+    private void Awake()
     {
-        base.Awake();
-        if (!pv.IsMine)
+        if (!isPlayer)
         {
-            unitGroup = EUnitGroup.Enemy;
+           Init(EUnitGroup.Enemy);
         } else
         {
-            unitGroup = EUnitGroup.Allay;
+            Init(EUnitGroup.Allay);
         }
     }
 }

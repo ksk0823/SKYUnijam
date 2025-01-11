@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
-
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 /// <summary>

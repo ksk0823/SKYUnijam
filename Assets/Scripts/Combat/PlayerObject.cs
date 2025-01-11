@@ -10,22 +10,18 @@ public class PlayerObject : UnitObject
     public int index;
     public PlayerMovement pm;
     public GameObject neutralUnitPrefab;
-    public GameObject UnitsObjects;
-    public List<GameObject> neutralUnitList;
+    public bool isPlayer;
 
     // 스킬 List 필요
     
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-        if (!pv.IsMine)
+        if (!isPlayer)
         {
-            GetComponent<PlayerInput>().enabled = false;
-            GetComponent<PlayerMovement>().enabled = false;
-            unitGroup = EUnitGroup.Enemy;
+           Init(EUnitGroup.Enemy);
         } else
         {
-            unitGroup = EUnitGroup.Allay;
+            Init(EUnitGroup.Allay);
         }
     }
 

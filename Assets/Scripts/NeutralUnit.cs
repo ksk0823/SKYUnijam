@@ -1,12 +1,9 @@
 using UnityEditor.EditorTools;
 using UnityEngine;
-using Photon.Pun;
-
-public class NeutralUnit : UnitObject
+ 
+public class NeutralUnit : MonoBehaviour
 {
     [Header("Main Settings")]
-    public int index;
-    public bool isFirst;
     public int health = 8;
     public float moveSpeed = 3f;
 
@@ -16,30 +13,15 @@ public class NeutralUnit : UnitObject
     private Rigidbody2D rb;
     private Vector2 currentDirection;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         rb = GetComponent<Rigidbody2D>();
-        //coll = GetComponent<Collider2D>();
-        if(isFirst)
-        {
-            if (!pv.IsMine)
-        {
-            unitGroup = EUnitGroup.Enemy;
-            CombatMain.Instance.enemyUnits.Add(gameObject);
-        } else
-        {
-            unitGroup = EUnitGroup.Allay;
-            CombatMain.Instance.playerUnits.Add(gameObject);
-        }}
-        
-        //myTag = gameObject.tag;
         rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     private void Start()
     {
-        //currentDirection = Vector2.zero;
+        currentDirection = Vector2.zero;
     }
 
     private void FixedUpdate()
@@ -52,56 +34,42 @@ public class NeutralUnit : UnitObject
         // 분열된 두 개의 오브젝트 생성
         for (int i = 0; i < splitTimes; i++)
         {
-            GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
-            Vector3 spawnPosition = transform.position + Vector3.up * 0.5f * i;
+            //GameObject tempObject = null; // splitTimes = 1일 때 오브젝트 활성화 위한 임시 오브젝트
 
-            if (splitTimes == 1)
+            //if (splitTimes == 1) // 예외처리 코드
+            //{
+            //    Debug.Log("Make only one object");
+
+            //    tempObject = GameManager.instance.pool.Get(0);
+            //    //SpriteRenderer tempSr = tempObject.GetComponent<SpriteRenderer>();
+
+            //    tempObject.transform.position = transform.position + Vector3.up * 0.5f;
+            //    tempObject.transform.rotation = Quaternion.identity;
+            //    tempObject.layer = LayerMask.NameToLayer("Active Unit");
+            //}
+
+            GameObject newObject = GameManager.instance.pool.Get(0);
+            newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
+            newObject.transform.rotation = Quaternion.identity;
+
+            Collider2D newColl = newObject.GetComponent<Collider2D>();
+            Rigidbody2D newRb = newObject.GetComponent<Rigidbody2D>();
+
+            newColl.isTrigger = false;
+            newRb.isKinematic = false;
+            newObject.layer = LayerMask.NameToLayer("Active Unit"); // Physics2D 상호작용 제거
+
+            foreach (Transform child in newObject.transform) // Unit 오브젝트 아래의 Trigger의 태그 변경
             {
-                //tempObject = PhotonNetwork.Instantiate("Unit"+index.ToString(), spawnPosition, Quaternion.identity);
+                child.gameObject.tag = "Split Disable";
             }
 
-            GameObject newObject = PhotonNetwork.Instantiate("Unit"+index.ToString(), spawnPosition, Quaternion.identity);
-            //newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
-            //newObject.transform.rotation = Quaternion.identity;
-            
-            // RPC를 통해 새로 생성된 오브젝트의 속성을 설정
-            PhotonView newPV = newObject.GetComponent<PhotonView>();
-            newPV.RPC("RPCInitializeUnit", RpcTarget.All);
-            
-            
+            NeutralUnit neutralScript = newObject.GetComponent<NeutralUnit>();
+            //neutralScript.SetTarget(FindClosestEnemy());
+            neutralScript.health = 8;
+            neutralScript.MoveToRandomDirection();
         }
-    }
-
-    [PunRPC]
-    private void RPCInitializeUnit()
-    {
-        if (pv.IsMine)
-        {
-            unitGroup = EUnitGroup.Allay;
-            CombatMain.Instance.playerUnits.Add(gameObject);
-        } else
-        {
-            unitGroup = EUnitGroup.Enemy;
-            CombatMain.Instance.enemyUnits.Add(gameObject);
-        }
-        Collider2D coll = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        
-        coll.isTrigger = false;
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        gameObject.layer = LayerMask.NameToLayer("Active Unit");
-        gameObject.tag = "Un Fixed";
-        foreach (Transform child in transform) // Unit 오브젝트 아래의 Trigger의 태그 변경
-        {
-            Debug.Log("Changed to split disable");
-            child.gameObject.tag = "Split Disable";
-        }
-
-        //SetTarget(FindClosestEnemy());
-        health = 8;
-        MoveToRandomDirection();
-        
-    }
+    }   
 
     void MoveToRandomDirection()
     {
@@ -133,6 +101,7 @@ public class NeutralUnit : UnitObject
 
     public void Damage(int damage)
     {
+        Debug.Log($"Unit Damaged, Damage : {damage}");
         health -= damage;
 
         if (health <= 0)
@@ -141,7 +110,6 @@ public class NeutralUnit : UnitObject
             gameObject.SetActive(false);
         }
     }
-    
 }
 
     //public void SetTarget(Transform enemy)
@@ -167,4 +135,3 @@ public class NeutralUnit : UnitObject
 
     //    return closest;
     //}
-

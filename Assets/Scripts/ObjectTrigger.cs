@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-using Photon.Pun;
 
-public class ObjectTrigger : MonoBehaviourPunCallbacks
+public class ObjectTrigger : MonoBehaviour
 {
     [Header("Objects")]
     public NeutralUnit unitPrefab;
+    public Nexus nexus;
 
     private bool isPlayerNearby = false;
     private string myTag;
-    private PhotonView pv;
     private float holdTime = 0f;
     private float interactionTime;
 
     private void Awake()
     {
-        pv = GetComponent<PhotonView>();
         myTag = gameObject.tag;
 
         SetInterTime();
@@ -85,27 +83,20 @@ public class ObjectTrigger : MonoBehaviourPunCallbacks
     {
         Debug.Log("넥서스 상호작용 실행");
         // 플레이어 넥서스 상호작용 로직 추가
+        //nexus.ShowCardUI();
     }
 
     void InteractUnit() 
     {
-        if (!PhotonNetwork.IsMessageQueueRunning) return;
-        
         Debug.Log("유닛 상호작용 실행");
+
         unitPrefab.Split(2, transform); // 한 개일 때 발생하는 버그 수정해야 함
-
-        pv.RPC("RPCSplit", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void RPCSplit()
-    {
         Destroy(transform.parent.gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && other.gameObject.GetComponent<UnitObject>().unitGroup == EUnitGroup.Allay)
+        if (other.CompareTag("Player"))
         {
             isPlayerNearby = true;
         }
@@ -113,7 +104,7 @@ public class ObjectTrigger : MonoBehaviourPunCallbacks
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && other.gameObject.GetComponent<UnitObject>().unitGroup == EUnitGroup.Allay)
+        if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
         }
