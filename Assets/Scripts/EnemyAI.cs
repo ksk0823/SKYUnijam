@@ -24,17 +24,14 @@ public class EnemyAI : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         unitGroup = GetComponent<UnitObject>().unitGroup;
-        StartCoroutine(WaitEffect());
     }
 
     private void Update()
     {
-        DecideNextAction();
-    }
+        if (!GameManager.instance.isGameStarted)
+            return;
 
-    IEnumerator WaitEffect()
-    {
-        yield return new WaitForSeconds(3f);
+        DecideNextAction();
     }
 
     void DecideNextAction()
@@ -121,6 +118,12 @@ public class EnemyAI : MonoBehaviour
 
     void MoveTowardsTarget(Transform target)
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         if (target == null) return;
 
         Vector2 direction = (target.position - transform.position).normalized;
