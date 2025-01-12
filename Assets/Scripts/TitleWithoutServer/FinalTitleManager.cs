@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System.Threading;
 
 public class FinalTitleManager : MonoBehaviour
 {
@@ -26,19 +28,33 @@ public class FinalTitleManager : MonoBehaviour
     public Button PlayerReadyButton;
     public GameObject ComputerCharacterInfo;
     public GameObject startGameButton;
-    
+
+    [Header("Tutorial")]
+    public GameObject TutorialPanel;
+    public Button next;
+    public Button start;
+
+    [Header("Text Index")]
+    public Image[] tuto;
+
     [Header("Sound")]
     public AudioClip clickSound;
     private AudioSource audioSource;
-
-    private bool isPlayerReady;
+    int count = 0;
+    public bool isPlayerReady;
     public int playerCharacterIndex;
     public int computerCharacterIndex;
 
     private void Awake()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            tuto[i].gameObject.SetActive(false);
+        }
         audioSource = GetComponent<AudioSource>();
         instance = this;
+        next.gameObject.SetActive(false);
+        start.gameObject.SetActive(false);
     }
 
     private void SelectComputerCharacter()
@@ -53,8 +69,25 @@ public class FinalTitleManager : MonoBehaviour
         CharacterChanger characterChanger = ComputerCharacterInfo.GetComponent<CharacterChanger>();
         characterChanger.imagechange(computerCharacterIndex);
         characterChanger.getReady();
-        
-        startGameButton.SetActive(true);
+
+        Thread.Sleep(30);
+        Tutorial();
+    }
+    public void Tutorial()
+    {
+        if (count == 0)
+            next.gameObject.SetActive(true);
+        if (count != 0)
+        {
+            tuto[count-1].gameObject.SetActive(false);
+        }
+        tuto[count].gameObject.SetActive(true);
+        count++;
+        if (count == 4)
+        {
+            next.gameObject.SetActive(false);
+            start.gameObject.SetActive(true);
+        }
     }
 
     #region UI Callbacks
