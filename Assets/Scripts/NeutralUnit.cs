@@ -13,7 +13,6 @@ public class NeutralUnit : UnitObject
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
-    private float nextSpawnTime = 0f;
 
     private void Awake()
     {
@@ -33,20 +32,11 @@ public class NeutralUnit : UnitObject
 
     public void Split(int splitTimes, Transform transform, EUnitGroup hitUnitGroup)
     {
-        // 현재 시간이 nextSpawnTime보다 작으면 실행 중단
-        if (Time.time < nextSpawnTime)
-        {
-            Debug.Log("Spawn is on cooldown.");
-            return;
-        }
-
-        nextSpawnTime = Time.time + spawnInterval;
-
         EUnitGroup newUnitGroup = EUnitGroup.Neutral;
         if (hitUnitGroup == EUnitGroup.Neutral)
         {
             newUnitGroup = hitUnitGroup;
-        } 
+        }
         else if (hitUnitGroup == EUnitGroup.Allay)
         {
             newUnitGroup = EUnitGroup.Allay;
@@ -58,24 +48,27 @@ public class NeutralUnit : UnitObject
             GameManager.instance.ActiveEnemyUnits += splitTimes;
         }
 
+        // 스플릿
         for (int i = 0; i < splitTimes; i++)
         {
             GameObject newObject = null;
-            if(newUnitGroup == EUnitGroup.Enemy)
+
+            if (newUnitGroup == EUnitGroup.Enemy)
             {
                 newObject = GameManager.instance.pool.Get(GameManager.instance.computerCharacterIndex);
                 newObject.GetComponent<NeutralUnit>().unitGroup = EUnitGroup.Enemy;
-            } else if (newUnitGroup == EUnitGroup.Allay)
+            }
+            else if (newUnitGroup == EUnitGroup.Allay)
             {
                 newObject = GameManager.instance.pool.Get(GameManager.instance.playerCharacterIndex);
                 newObject.GetComponent<NeutralUnit>().unitGroup = EUnitGroup.Allay;
-            } else
+            }
+            else
             {
                 newObject = GameManager.instance.pool.Get(0);
             }
 
-            //GameObject newObject = GameManager.instance.pool.Get(0);
-            newObject.transform.position = transform.position + Vector3.up * 0.5f * i;
+            newObject.transform.position = transform.position + Vector3.up * 1f * i;
             newObject.transform.rotation = Quaternion.identity;
 
             Collider2D newColl = newObject.GetComponent<Collider2D>();
@@ -85,7 +78,7 @@ public class NeutralUnit : UnitObject
             newColl.isTrigger = false;
             newRb.isKinematic = false;
             newObject.layer = LayerMask.NameToLayer("Active Unit");
-            
+
             // GameManager의 리스트에 추가
             if (newUnitGroup == EUnitGroup.Allay)
             {
@@ -126,21 +119,21 @@ public class NeutralUnit : UnitObject
             currentDirection.x *= Random.Range(-0.8f, -1.2f);
             currentDirection.y *= Random.Range(-0.8f, -1.2f);
         }
-        
+
         // NeutralUnit끼리의 충돌 처리
         NeutralUnit otherUnit = collObj.GetComponent<NeutralUnit>();
         if (otherUnit != null)
         {
             // 서로 다른 그룹일 경우에만 데미지 처리
-            if (unitGroup != otherUnit.unitGroup && 
-                unitGroup != EUnitGroup.Neutral && 
+            if (unitGroup != otherUnit.unitGroup &&
+                unitGroup != EUnitGroup.Neutral &&
                 otherUnit.unitGroup != EUnitGroup.Neutral)
             {
                 Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
                 Damage(1);
                 otherUnit.Damage(1);
             }
-            
+
             // 충돌 시 방향 전환
             currentDirection.x *= Random.Range(-0.8f, -1.2f);
             currentDirection.y *= Random.Range(-0.8f, -1.2f);
@@ -155,18 +148,20 @@ public class NeutralUnit : UnitObject
         if (health <= 0)
         {
             Debug.Log("I'm Dead");
-            if(unitGroup == EUnitGroup.Allay)
+            if (unitGroup == EUnitGroup.Allay)
             {
                 GameManager.instance.pool.prefabs[GameManager.instance.computerCharacterIndex].GetComponent<NeutralUnit>().Split(2, transform, EUnitGroup.Enemy);
-            } else if (unitGroup == EUnitGroup.Enemy)
+            }
+            else if (unitGroup == EUnitGroup.Enemy)
             {
                 GameManager.instance.pool.prefabs[GameManager.instance.playerCharacterIndex].GetComponent<NeutralUnit>().Split(2, transform, EUnitGroup.Allay);
             }
             gameObject.SetActive(false);
-            if(unitGroup == EUnitGroup.Allay)
+            if (unitGroup == EUnitGroup.Allay)
             {
                 GameManager.instance.ActivePlayerUnits--;
-            } else if (unitGroup == EUnitGroup.Enemy)
+            }
+            else if (unitGroup == EUnitGroup.Enemy)
             {
                 GameManager.instance.ActiveEnemyUnits--;
             }
