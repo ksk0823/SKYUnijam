@@ -6,14 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Scenes/ReallyFinalScenes/FinalTitleScene.unity
     guid: 0f679b6bfd51ddc4b9fc88a38bbd6359
-  - enabled: 1
-    path: Assets/Scenes/ReallyFinalScenes/SingleCombat.unity
-    guid: 5a8b32adb54c47e46a9da5be7963c985
   - enabled: 1
     path: Assets/Scenes/ReallyFinalScenes/BackUp.unity
     guid: c3ab7f5a51d73f64d8aa11fefa28816f

@@ -27,16 +27,6 @@ public class PlayerListEntry : MonoBehaviourPunCallbacks
     
     #region Unity Callbacks
     
-    public void OnEnable()
-    {
-        PlayerNumbering.OnPlayerNumberingChanged += OnPlayerNumberingChanged;
-    }
-
-    public void OnDisable()
-    {
-        PlayerNumbering.OnPlayerNumberingChanged -= OnPlayerNumberingChanged;
-    }
-
     private void Start()
     {
         // 자신의 PlayerInfo가 아닌 경우 컨트롤 비활성화
