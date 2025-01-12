@@ -31,6 +31,8 @@ public class EndingScene : MonoBehaviour
         {
             winImage.sprite = loseImages[PlayerPrefs.GetInt("PlayerCharacter")];
             ResultText.text = "DEFEAT";
+            Color color;
+            ResultText.color = new Vector4(247/255f,16/255f,0,100);
             DescriptionText.text = loseDescriptionTexts[PlayerPrefs.GetInt("PlayerCharacter")];
 
         }

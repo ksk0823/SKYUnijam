@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -291,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 0}
   nexus: {fileID: 0}
+  part: {fileID: 0}
   interactionTime: 0
   spawnPosition: {fileID: 106001578}
 --- !u!58 &12181671
@@ -1391,6 +1393,7 @@ MonoBehaviour:
   attackSpeed: 3
   moveSpeed: 5
   unitGroup: 0
+  cardManager: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1984
@@ -1761,6 +1764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 0}
   nexus: {fileID: 0}
+  part: {fileID: 0}
   interactionTime: 0
   spawnPosition: {fileID: 1315169254}
 --- !u!114 &607632845
@@ -1854,7 +1858,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -1869,15 +1873,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_UseCustomTrailVertexStreams: 0
-  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -6772,12 +6774,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1001 &857979758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7164,7 +7166,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -7179,15 +7181,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_UseCustomTrailVertexStreams: 0
-  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -11998,7 +11998,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -12013,15 +12013,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_UseCustomTrailVertexStreams: 0
-  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -16924,6 +16922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 0}
   nexus: {fileID: 1383545597}
+  part: {fileID: 0}
   interactionTime: 0
   spawnPosition: {fileID: 0}
 --- !u!1 &1104581935
@@ -17280,6 +17279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 0}
   nexus: {fileID: 0}
+  part: {fileID: 0}
   interactionTime: 0
   spawnPosition: {fileID: 797053558}
 --- !u!58 &1269056969
@@ -17826,7 +17826,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -17841,15 +17841,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_UseCustomTrailVertexStreams: 0
-  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -22697,6 +22695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 0}
   nexus: {fileID: 0}
+  part: {fileID: 0}
   interactionTime: 0
   spawnPosition: {fileID: 494589162}
 --- !u!58 &1481767437
@@ -22899,8 +22898,8 @@ MonoBehaviour:
   m_text: "\uD50C\uB808\uC774\uC5B4\uC758 \uC774\uB3D9\uC18D\uB3C4\uAC00 1.2\uBC30
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c761b225c5fff44cab630665b5189d4d, type: 2}
-  m_sharedMaterial: {fileID: -5804591761158170978, guid: c761b225c5fff44cab630665b5189d4d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 58e356a9ba2554dbea4014f77acedd46, type: 2}
+  m_sharedMaterial: {fileID: 5118408653342558962, guid: 58e356a9ba2554dbea4014f77acedd46, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -23007,6 +23006,7 @@ MonoBehaviour:
   - {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
   - {fileID: 3411832182620486813, guid: af824bf3922f3974a95e268bb8ea07bf, type: 3}
   - {fileID: 3411832182620486813, guid: b2adc00439a037e4bb84384457848ed5, type: 3}
+  maxObjectCount: 200
 --- !u!4 &1537935010
 Transform:
   m_ObjectHideFlags: 0
@@ -23075,7 +23075,7 @@ MonoBehaviour:
   firstAngryTime: 0
   secondAngryTime: 0
   angryEffect: {fileID: 2141661875}
-  nexusSpawnUnit: {fileID: 0}
+  playerNexusRegion: {fileID: 0}
   playerCharacter: {fileID: 539580782}
   playerKillCount: 0
   maxPlayerKillCount: 0
@@ -23098,6 +23098,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c90457d7d2c8d418ca4b9291e26117b1, type: 3}
   - {fileID: 21300000, guid: 5c21fa57d2668461fb35509014b5f1ed, type: 3}
   - {fileID: 21300000, guid: dd1bdc6d40b28425c9a0715e527f10b3, type: 3}
+  startEffectDuration: 3
+  isGameStarted: 0
 --- !u!82 &1572379254
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23443,7 +23445,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -23458,15 +23460,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_UseCustomTrailVertexStreams: 0
-  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -28362,8 +28362,8 @@ MonoBehaviour:
   m_text: "\uD50C\uB808\uC774\uC5B4\uC758 \uC774\uB3D9\uC18D\uB3C4\uAC00 1.2\uBC30
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c761b225c5fff44cab630665b5189d4d, type: 2}
-  m_sharedMaterial: {fileID: -5804591761158170978, guid: c761b225c5fff44cab630665b5189d4d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 58e356a9ba2554dbea4014f77acedd46, type: 2}
+  m_sharedMaterial: {fileID: 5118408653342558962, guid: 58e356a9ba2554dbea4014f77acedd46, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -28701,6 +28701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 0}
   nexus: {fileID: 1383545597}
+  part: {fileID: 0}
   interactionTime: 0
   spawnPosition: {fileID: 0}
 --- !u!58 &1759631289
@@ -28816,7 +28817,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -28831,15 +28832,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_UseCustomTrailVertexStreams: 0
-  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -33620,6 +33619,10 @@ MonoBehaviour:
   - {fileID: 315128746}
   - {fileID: 592541303}
   - {fileID: 1649249510}
+  cardTimer: 0
+  showCards: 0
+  cardInterval: 5
+  isInsideTrigger: 0
   allCards:
   - {fileID: 11400000, guid: 3c4e6b50a223729478985aad0b2a2944, type: 2}
   - {fileID: 11400000, guid: 1c43c67a798a3d744b395b6c299e3f79, type: 2}
@@ -33810,8 +33813,8 @@ MonoBehaviour:
   m_text: "\uD50C\uB808\uC774\uC5B4\uC758 \uC774\uB3D9\uC18D\uB3C4\uAC00 1.2\uBC30
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c761b225c5fff44cab630665b5189d4d, type: 2}
-  m_sharedMaterial: {fileID: -5804591761158170978, guid: c761b225c5fff44cab630665b5189d4d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 58e356a9ba2554dbea4014f77acedd46, type: 2}
+  m_sharedMaterial: {fileID: 5118408653342558962, guid: 58e356a9ba2554dbea4014f77acedd46, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34109,6 +34112,7 @@ MonoBehaviour:
   attackSpeed: 0
   moveSpeed: 5
   unitGroup: 0
+  cardManager: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -34295,6 +34299,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 1984
+  showUI: 0
 --- !u!114 &1984641658
 MonoBehaviour:
   m_ObjectHideFlags: 0
