@@ -88,7 +88,7 @@ public class Card : MonoBehaviour
         if (stats != null)
         {
             stats.moveSpeed *= value;
-            Debug.Log($"플레이어 속도 {value} 증가");
+            Debug.Log($"오브젝트 이동속도 {value} 증가");
         }
     }
 
@@ -99,7 +99,7 @@ public class Card : MonoBehaviour
         if (stats != null)
         {
             stats.attackSpeed *= value;
-            Debug.Log($"플레이어 공격속도 {value} 증가");
+            Debug.Log($"오브젝트 공격속도 {value} 증가");
         }
     }
 
@@ -110,7 +110,7 @@ public class Card : MonoBehaviour
         if (stats != null)
         {
             stats.maxAttackDistance *= value;
-            Debug.Log($"플레이어 공격 범위 {value} 증가");
+            Debug.Log($"오브젝트 공격 범위 {value} 증가");
         }
     }
 
@@ -153,6 +153,6 @@ public class Card : MonoBehaviour
 
     private void PlayerMineSpeedBuff(GameObject player, float value)
     {
-        Debug.Log("플레이어 채굴속도 감소");
+        Debug.Log("오브젝트 채굴속도 감소");
     }
 }
