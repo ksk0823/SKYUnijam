@@ -104,6 +104,11 @@ public class GameManager : MonoBehaviour
         CheckGameEnd();
     }
 
+    public void RunCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
+    }
+
     void AddNewUnit()
     {
         if (playerKillCount >= maxPlayerKillCount)

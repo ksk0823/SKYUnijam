@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
             GameManager.instance.playerKillCount++;
             Debug.Log("Enemy Dead");
             gameObject.SetActive(false);
-            unitPrefab.Split(1, transform, EUnitGroup.Allay);
+            unitPrefab.Split(2, transform, EUnitGroup.Allay);
         }
     }
 }

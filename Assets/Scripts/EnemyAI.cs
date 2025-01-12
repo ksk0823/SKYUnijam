@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float maxAttackDistance = 5f;
     public int attackDamage = 10;
     public LayerMask targetLayer;
+    public bool showUI = false;
 
     [Header("References")]
     private Rigidbody2D rb;
@@ -33,6 +34,11 @@ public class EnemyAI : MonoBehaviour
 
         DecideNextAction();
     }
+    
+    void SetUI()
+        {
+            showUI = false;
+        }
 
     void DecideNextAction()
     {
@@ -56,6 +62,8 @@ public class EnemyAI : MonoBehaviour
                 // 자신의 넥서스 공격
                 Transform nexus = GameManager.instance.enemyNexus.transform;
                 MoveTowardsTarget(nexus);
+                showUI = true;
+                                Invoke("SetUI", 4f);
                 // 넥서스 구현 필요
                 //AttackTarget(nexus);
                 //nexusAttackCount++;
@@ -128,6 +136,7 @@ public class EnemyAI : MonoBehaviour
 
         Vector2 direction = (target.position - transform.position).normalized;
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+        //Debug.Log($"이동 방향 : {direction}");
     }
 
     void AttackTarget(Transform target)
