@@ -5,6 +5,7 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     public GameObject[] prefabs;
+    public int maxChildObjects = 40;
 
     private List<GameObject>[] pools;
 
@@ -21,6 +22,12 @@ public class PoolManager : MonoBehaviour
     public GameObject Get(int index)
     {
         GameObject select = null;
+
+        if (pools.Length >= maxChildObjects)
+        {
+            Debug.LogWarning("풀매니저 꽉찼음");
+            return null;
+        }
 
         foreach (GameObject item in pools[index])
         {

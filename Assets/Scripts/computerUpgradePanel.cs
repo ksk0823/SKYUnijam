@@ -6,22 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class computerUpgradePanel : MonoBehaviour
 {
+    public EnemyAI enemyAI;
     private bool isAlive;
     public float firstPos = 8;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (enemyAI.showUI && isAlive)
         {
-            isAlive = !isAlive;
+            SetBoolActive();
             if (!isAlive) StartCoroutine(die());
             else StartCoroutine(generate());
+            Invoke("SetBoolActive", 3f);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    void SetBoolActive()
+    {
+        isAlive = !isAlive;
     }
 
     IEnumerator die()

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
@@ -13,13 +14,27 @@ public class NeutralUnit : UnitObject
 
     private Rigidbody2D rb;
     private Vector2 currentDirection;
+    private bool canSplit;
+    private bool canHealthDecrease;
 
+    private bool invinsible = true;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
     }
+    private void OnEnable()
+    {
+        StartCoroutine(invinsibleCheck());
+    }
 
+    IEnumerator invinsibleCheck()
+    {
+        invinsible = true;
+        yield return new WaitForSeconds(5f);
+        invinsible = false;
+        
+    }
     private void Start()
     {
         currentDirection = Vector2.zero;
@@ -48,11 +63,9 @@ public class NeutralUnit : UnitObject
             GameManager.instance.ActiveEnemyUnits += splitTimes;
         }
 
-        // 스플릿
         for (int i = 0; i < splitTimes; i++)
         {
             GameObject newObject = null;
-
             if (newUnitGroup == EUnitGroup.Enemy)
             {
                 newObject = GameManager.instance.pool.Get(GameManager.instance.computerCharacterIndex);
@@ -68,7 +81,8 @@ public class NeutralUnit : UnitObject
                 newObject = GameManager.instance.pool.Get(0);
             }
 
-            newObject.transform.position = transform.position + Vector3.up * 1f * i;
+            //GameObject newObject = GameManager.instance.pool.Get(0);
+            newObject.transform.position = transform.position + Vector3.up * 0.2f * i;
             newObject.transform.rotation = Quaternion.identity;
 
             Collider2D newColl = newObject.GetComponent<Collider2D>();
@@ -143,7 +157,8 @@ public class NeutralUnit : UnitObject
     public void Damage(int damage)
     {
         Debug.Log($"Unit Damaged, Damage : {damage}");
-        health -= damage;
+        if (invinsible) return;
+         health -= damage;
 
         if (health <= 0)
         {

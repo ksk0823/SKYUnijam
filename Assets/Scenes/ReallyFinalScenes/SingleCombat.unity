@@ -2168,6 +2168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9aad1ce3058504194a87ac1571a544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 1984641657}
   firstPos: 8
 --- !u!1 &843668328
 GameObject:
@@ -4151,6 +4152,7 @@ MonoBehaviour:
   - {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
   - {fileID: 3411832182620486813, guid: af824bf3922f3974a95e268bb8ea07bf, type: 3}
   - {fileID: 3411832182620486813, guid: b2adc00439a037e4bb84384457848ed5, type: 3}
+  maxChildObjects: 40
 --- !u!4 &1537935010
 Transform:
   m_ObjectHideFlags: 0
@@ -6162,6 +6164,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 1984
+  showUI: 0
 --- !u!114 &1984641658
 MonoBehaviour:
   m_ObjectHideFlags: 0
