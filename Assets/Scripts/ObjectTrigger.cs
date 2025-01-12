@@ -8,6 +8,7 @@ public class ObjectTrigger : MonoBehaviour
     [Header("Objects")]
     public NeutralUnit unitPrefab;
     public Nexus nexus;
+    public ParticleSystem part;
 
     private bool isPlayerNearby = false;
     private string myTag;
@@ -19,6 +20,7 @@ public class ObjectTrigger : MonoBehaviour
 
     private void Awake()
     {
+        part.gameObject.SetActive(false);  
         myTag = gameObject.tag;
 
         SetInterTime();
@@ -173,8 +175,28 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            part.gameObject.SetActive(true);
             isPlayerNearby = true;
             hitUnitGroup = other.GetComponent<UnitObject>().unitGroup;
+
+            // 트리거 타입에 따라 파티클 설정
+            switch (myTag)
+            {
+                case "Nexus Trigger":
+                    ActivateParticleSystem(5f);  // 파티클 수명 5초
+                    break;
+
+                case "Fixed":
+                    ActivateParticleSystem(5f);  // 파티클 수명 5초
+                    break;
+
+                case "Unit Trigger":
+                    ActivateParticleSystem(2f);  // 파티클 수명 2초
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
@@ -182,8 +204,20 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            part.Stop();
+            part.gameObject.SetActive(false);
             isPlayerNearby = false;
             hitUnitGroup = EUnitGroup.Neutral;
+        }
+    }
+    void ActivateParticleSystem(float lifetime)
+    {
+        if (part != null)
+        {
+            part.gameObject.SetActive(true);
+            var main = part.main;
+            main.startLifetime = lifetime;  // 파티클 시작 수명 설정
+            part.Play();
         }
     }
 }
