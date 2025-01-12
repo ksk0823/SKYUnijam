@@ -5,22 +5,55 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     public CardAnim[] cards;
+    public float cardTimer;
+    public bool showCards = false;
+    public float cardInterval = 5f;
+    public bool isInsideTrigger = false;
 
     [Header("Card Data List")]
     public List<CardData> allCards; // CardData ScriptableObject 리스트
 
     [Header("Card UI References")]
     public List<Card> cardSlots; // Card 오브젝트 (UI 슬롯)
-     
+
+    private void Start()
+    {
+        HideAllCardSlots();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C)) // 카드 생성 초기화
+        if (showCards)
         {
-            foreach (CardAnim card in cards)
-            {
-                card.Init();
-            }
-            FindObjectOfType<CardManager>().GenerateRandomCards();
+            ShowCards();
+            showCards = false;
+        }
+    }
+
+    void ShowCards()
+    {
+        ShowAllCardSlots();
+
+        foreach (CardAnim card in cards)
+        {
+            card.Init();
+        }
+        FindObjectOfType<CardManager>().GenerateRandomCards();
+    }
+
+    private void HideAllCardSlots()
+    {
+        foreach (var slot in cardSlots)
+        {
+            slot.gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowAllCardSlots()
+    {
+        foreach (var slot in cardSlots)
+        {
+            slot.gameObject.SetActive(true);
         }
     }
 

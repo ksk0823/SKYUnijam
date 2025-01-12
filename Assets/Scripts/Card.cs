@@ -24,18 +24,22 @@ public class Card : MonoBehaviour
         {
             cardNameText.text = data.cardName;
             cardNameText.color = Color.white;
+            cardNameText.alpha = 1f;
+            //Debug.Log($"Card Name : {cardNameText.text}");
         }
 
         if (cardDescriptionText != null)
         {
             cardDescriptionText.text = data.description;
             cardDescriptionText.color = Color.white;
+            cardDescriptionText.alpha = 1f;
+            //Debug.Log($"Desciption : {cardDescriptionText.text}");
         }
     }
 
-    public void Effect(GameObject player, GameObject unit)
+    public void Effect(GameObject player, List<GameObject> units)
     {
-        Debug.Log($"Activating card effect: {data.cardType}");
+        Debug.Log(data.cardType);
 
         switch (data.cardType)
         {
@@ -56,15 +60,15 @@ public class Card : MonoBehaviour
                 break;
 
             case CardData.CardType.UnitMoveSpeed:
-                AllySpeedBuff(data.effectValue);
+                AllySpeedBuff(units, data.effectValue);
                 break;
-
+                
             case CardData.CardType.UnitAttackDamage:
-                AllyAttackDamageBuff(data.effectValue);
+                AllyAttackDamageBuff(units, data.effectValue);
                 break;
 
             case CardData.CardType.UnitHealth:
-                AllyHealthBuff(data.effectValue);
+                AllyHealthBuff(units, data.effectValue);
                 break;
 
             case CardData.CardType.MineSpeed:
@@ -80,88 +84,75 @@ public class Card : MonoBehaviour
     private void PlayerSpeedBuff(GameObject player, float value)
     {
         var stats = player.GetComponent<PlayerMovement>();
-        if (stats != null && stats.moveSpeed < 10)
+
+        if (stats != null)
         {
             stats.moveSpeed *= value;
-            Debug.Log($"플레이어 이동 속도가 {value}배 증가했습니다.");
-        }
-        else
-        {
-            Debug.Log("플레이어 이동 속도가 이미 최대치입니다.");
+            Debug.Log($"플레이어 속도 {value} 증가");
         }
     }
 
     private void PlayerAttackSpeedBuff(GameObject player, float value)
     {
         var stats = player.GetComponent<PlayerMovement>();
+
         if (stats != null)
         {
             stats.attackSpeed *= value;
-            Debug.Log($"플레이어 공격 속도가 {value}배 증가했습니다.");
+            Debug.Log($"플레이어 공격속도 {value} 증가");
         }
     }
 
     private void PlayerAttackRangeBuff(GameObject player, float value)
     {
         var stats = player.GetComponent<PlayerMovement>();
+
         if (stats != null)
         {
             stats.maxAttackDistance *= value;
-            Debug.Log($"플레이어 공격 범위가 {value}배 증가했습니다.");
+            Debug.Log($"플레이어 공격 범위 {value} 증가");
         }
     }
 
     private void PlayerAttackCountBuff(GameObject player, float value)
     {
-        var stats = player.GetComponent<PlayerMovement>();
-        if (stats != null)
-        {
-            stats.clickDamage += value;
-            Debug.Log($"플레이어 공격 횟수가 {value}만큼 증가했습니다.");
-        }
+        Debug.Log($"구현 X");
     }
 
-    private void AllySpeedBuff(float value)
+    private void AllySpeedBuff(List<GameObject> units, float value)
     {
-        foreach (GameObject unit in GameManager.instance.playerUnits)
+        Debug.Log($"Units : {units}");
+
+        foreach (GameObject unit in units)
         {
-            var stats = unit.GetComponent<NeutralUnit>();
-            if (stats != null)
-            {
-                stats.moveSpeed *= value;
-                Debug.Log($"유닛 {unit.name}의 이동 속도가 {value}배 증가했습니다.");
-            }
-        }
+            NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
+            neutralUnit.moveSpeed *= value;
+        }    
+        Debug.Log($"유닛 이동속도 {value} 증가");
     }
 
-    private void AllyAttackDamageBuff(float value)
+    private void AllyAttackDamageBuff(List<GameObject> units, float value)
     {
-        foreach (GameObject unit in GameManager.instance.playerUnits)
+        foreach (GameObject unit in units)
         {
-            var stats = unit.GetComponent<NeutralUnit>();
-            if (stats != null)
-            {
-                stats.damage += value;
-                Debug.Log($"유닛 {unit.name}의 공격력이 {value}만큼 증가했습니다.");
-            }
+            NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
+            // 데미지 적용하기
         }
+        Debug.Log($"유닛 데미지 {value} 증가");
     }
 
-    private void AllyHealthBuff(float value)
+    private void AllyHealthBuff(List<GameObject> units, float value)
     {
-        foreach (GameObject unit in GameManager.instance.playerUnits)
+        foreach (GameObject unit in units)
         {
-            var stats = unit.GetComponent<NeutralUnit>();
-            if (stats != null)
-            {
-                stats.health += value;
-                Debug.Log($"유닛 {unit.name}의 체력이 {value}만큼 증가했습니다.");
-            }
+            NeutralUnit neutralUnit = unit.GetComponent<NeutralUnit>();
+            neutralUnit.health *= value;
         }
+        Debug.Log($"유닛 체력 {value} 증가");
     }
 
     private void PlayerMineSpeedBuff(GameObject player, float value)
     {
-
+        Debug.Log("플레이어 채굴속도 감소");
     }
 }

@@ -12,6 +12,7 @@ TagManager:
   - Split Disable
   - Border
   - Nexus
+  - Nexus Region
   layers:
   - Default
   - TransparentFX

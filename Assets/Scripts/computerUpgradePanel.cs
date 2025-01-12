@@ -7,45 +7,35 @@ using UnityEngine.SceneManagement;
 public class computerUpgradePanel : MonoBehaviour
 {
     private bool isAlive;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float firstPos = 8;
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             isAlive = !isAlive;
-            if(isAlive)StartCoroutine(die());
+            if (!isAlive) StartCoroutine(die());
             else StartCoroutine(generate());
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
-    void pannelonoff()
-    {
-        
-    }
-
     IEnumerator die()
     {
-        transform.DOMoveX(9f,0.1f);
+        transform.DOMoveX(firstPos, 0.1f);
         yield return new WaitForSeconds(0.1f);
-        transform.DOMoveX(13f,0.2f);
+        transform.DOMoveX(firstPos+4, 0.2f);
         yield return null;
     }
     IEnumerator generate()
     {
-        transform.DOMoveX(9f,0.1f);
+        transform.DOMoveX(firstPos, 0.1f);
         yield return new WaitForSeconds(0.1f);
-        transform.DOMoveX(9.3f,0.2f);
+        transform.DOMoveX(firstPos+0.3f, 0.2f);
         yield return null;
     }
 }
