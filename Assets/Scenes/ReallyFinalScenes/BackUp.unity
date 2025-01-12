@@ -24005,6 +24005,7 @@ MonoBehaviour:
   - {fileID: 3411832182620486813, guid: 5644a7482eeb0254e98ff12bbd9ded2c, type: 3}
   - {fileID: 3411832182620486813, guid: af824bf3922f3974a95e268bb8ea07bf, type: 3}
   - {fileID: 3411832182620486813, guid: b2adc00439a037e4bb84384457848ed5, type: 3}
+  maxObjectCount: 200
 --- !u!4 &1537935010
 Transform:
   m_ObjectHideFlags: 0
@@ -24207,7 +24208,7 @@ MonoBehaviour:
   gameTime: 0
   firstAngryTime: 0
   secondAngryTime: 0
-  angryEffect: {fileID: 2141661875}
+  angryEffect: {fileID: 2141661873}
   playerNexusRegion: {fileID: 0}
   playerCharacter: {fileID: 539580782}
   playerKillCount: 0
@@ -39992,6 +39993,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 1984
+  showUI: 0
 --- !u!114 &1984641658
 MonoBehaviour:
   m_ObjectHideFlags: 0

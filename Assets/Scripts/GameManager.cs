@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float firstAngryTime;
     public float secondAngryTime;
-    public AngryEffect angryEffect;
+    public Animator angryEffect;
     public GameObject playerNexusRegion;
 
     [Header("Player Character")]
@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour
         playerCharacterIndex = PlayerPrefs.GetInt("PlayerCharacter");
         computerCharacterIndex = PlayerPrefs.GetInt("ComputerCharacter");
 
-        firstAngryTime = 15f;
-        secondAngryTime = 30f;
+        firstAngryTime = 40f;
+        secondAngryTime = 80f;
         playerKillCount = 0;
         enemyKillCount = 0;
         maxPlayerKillCount = 0;
@@ -94,11 +94,11 @@ public class GameManager : MonoBehaviour
 
         if (gameTime > firstAngryTime)
         {
-            // Small Angry Active
+            angryEffect.SetBool("isSmallAngry", true);
         }
-        else if (gameTime > secondAngryTime)
+        if (gameTime > secondAngryTime)
         {
-            // Big Angry Active
+            angryEffect.SetBool("isBigAngry", true);
         }
 
         CheckGameEnd();
