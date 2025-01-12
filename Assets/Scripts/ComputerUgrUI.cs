@@ -11,7 +11,7 @@ public class ComputerUgrUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             isAlive = !isAlive;
             if (!isAlive) StartCoroutine(die());

@@ -24,6 +24,11 @@ public class Nexus : UnitObject
         }
     }
 
+    void Update()
+    {
+        healthText.text = health.ToString();
+    }
+
     public void Damage(float damage)
     {
         health -= damage;

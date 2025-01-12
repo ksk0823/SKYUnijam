@@ -13,6 +13,10 @@ public class NeutralUnit : UnitObject
     public float spawnInterval = 1f;
     public GameObject damageEffect;
 
+    public float damage;
+
+
+
     [Header("Objects")]
     public GameObject neutralPrefab;
     private Rigidbody2D rb;
@@ -67,15 +71,13 @@ public class NeutralUnit : UnitObject
             GameManager.instance.ActiveEnemyUnits += splitTimes;
         }
 
-        // 스플릿
         for (int i = 0; i < splitTimes; i++)
         {
             GameObject newObject = null;
-
             if (newUnitGroup == EUnitGroup.Enemy)
             {
                 newObject = GameManager.instance.pool.Get(GameManager.instance.computerCharacterIndex);
-                    newObject.GetComponent<NeutralUnit>().unitGroup = EUnitGroup.Enemy;
+                newObject.GetComponent<NeutralUnit>().unitGroup = EUnitGroup.Enemy;
             }
             else if (newUnitGroup == EUnitGroup.Allay)
             {
@@ -87,7 +89,8 @@ public class NeutralUnit : UnitObject
                 newObject = GameManager.instance.pool.Get(0);
             }
 
-            newObject.transform.position = transform.position + Vector3.up * 1f * i;
+            //GameObject newObject = GameManager.instance.pool.Get(0);
+            newObject.transform.position = transform.position + Vector3.up * 0.2f * i;
             newObject.transform.rotation = Quaternion.identity;
 
             Collider2D newColl = newObject.GetComponent<Collider2D>();
@@ -135,6 +138,11 @@ public class NeutralUnit : UnitObject
         }
         else if (objTag == "Nexus" || objTag == "Border")
         {
+            if(objTag == "Nexus")
+                {
+                    collObj.GetComponent<Nexus>().Damage(damage);
+                    gameObject.SetActive(false);
+                }
             currentDirection.x *= Random.Range(-0.8f, -1.2f);
             currentDirection.y *= Random.Range(-0.8f, -1.2f);
         }
@@ -148,11 +156,17 @@ public class NeutralUnit : UnitObject
                 unitGroup != EUnitGroup.Neutral &&
                 otherUnit.unitGroup != EUnitGroup.Neutral)
             {
-                Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
-                Damage(1);
-                otherUnit.Damage(1);
-                StartCoroutine(damageEffectCtl());
-                
+                // 넥서스 데미지 주기
+                if(objTag == "Nexus")
+                {
+                    collObj.GetComponent<Nexus>().Damage(damage);
+                    gameObject.SetActive(false);
+                } else
+                {
+                    Debug.Log($"Collision between {unitGroup} and {otherUnit.unitGroup}");
+                    Damage(damage);
+                    otherUnit.Damage(damage);
+                }
             }
 
             // 충돌 시 방향 전환
@@ -164,8 +178,8 @@ public class NeutralUnit : UnitObject
     public void Damage(float damage)
     {
         Debug.Log($"Unit Damaged, Damage : {damage}");
-        if(isInvincible)return;
-        health -= damage;
+        if (isInvincible) return;
+         health -= damage;
 
         if (health <= 0)
         {
