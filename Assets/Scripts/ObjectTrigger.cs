@@ -20,11 +20,7 @@ public class ObjectTrigger : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< Updated upstream
-        part.gameObject.SetActive(false);  
-=======
         part.gameObject.SetActive(false);
->>>>>>> Stashed changes
         myTag = gameObject.tag;
 
         SetInterTime();
@@ -208,10 +204,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-<<<<<<< Updated upstream
             part.Stop();
-=======
->>>>>>> Stashed changes
             part.gameObject.SetActive(false);
             isPlayerNearby = false;
             hitUnitGroup = EUnitGroup.Neutral;
