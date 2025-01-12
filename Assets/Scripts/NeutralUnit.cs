@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class NeutralUnit : UnitObject
 {
+    private bool isInvincible = true;
     [Header("Main Settings")]
     public float health;
     public float moveSpeed = 3f;
@@ -27,6 +28,17 @@ public class NeutralUnit : UnitObject
     {
         currentDirection = Vector2.zero;
     }
+
+    private void OnEnable()
+    {
+        isInvincible = false;
+        Invoke(nameof(RemoveInvincibility),2f);
+    }
+    private void RemoveInvincibility()
+    {
+    isInvincible = false;
+    }
+
 
     private void FixedUpdate()
     {

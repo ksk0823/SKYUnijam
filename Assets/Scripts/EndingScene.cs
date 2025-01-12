@@ -22,7 +22,7 @@ public class EndingScene : MonoBehaviour
     void Awake()
     {
         winImage = winImageObject.GetComponent<Image>();
-        if (PlayerPrefs.GetInt("GameResult") == 0)
+        if (PlayerPrefs.GetInt("GameResult") == 1)
         {
             winImage.sprite = winImages[PlayerPrefs.GetInt("PlayerCharacter")];
             ResultText.text = "VICTORY";
