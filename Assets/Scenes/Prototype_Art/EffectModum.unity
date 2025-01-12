@@ -530,6 +530,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223479642}
+  - component: {fileID: 223479643}
   m_Layer: 5
   m_Name: VictoryorDefeat
   m_TagString: Untagged
@@ -560,6 +561,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &223479643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223479641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ad074e6dd0d461984074e9d1534447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  win: 1
+  gameEND: 0
+  MainImgs:
+  - {fileID: 21300000, guid: d6f5b334311374fbdb08faf3c265af1b, type: 3}
+  - {fileID: 21300000, guid: 0e913c517ab3041e291b1ecd3a5835d6, type: 3}
+  - {fileID: 21300000, guid: 792f3d1adcf654dad8f2a7c26544f450, type: 3}
+  - {fileID: 21300000, guid: c8c7c51caa24547d5bc3ce2ae425c715, type: 3}
+  - {fileID: 21300000, guid: 7d670e97a4e804d3c85131a9387f312b, type: 3}
+  - {fileID: 21300000, guid: 857cf48b16e66456b99633ca6f778a8e, type: 3}
+  MainTxt: {fileID: 2067591364}
+  bonmoon: {fileID: 113337082}
+  img: {fileID: 1497892158}
 --- !u!1 &284429971
 GameObject:
   m_ObjectHideFlags: 0
