@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitGroup: 2
-  health: 10000
+  health: 100
   interactionTime: 0
   healthText: {fileID: 1576613132}
   isPlayer: 0
@@ -1713,7 +1713,7 @@ MonoBehaviour:
     m_Bits: 1984
   clickDamage: 10
   attackRadius: 2
-  maxAttackDistance: 5
+  maxAttackDistance: 2
   cooldownTime: 2
 --- !u!114 &539580789
 MonoBehaviour:
@@ -18558,7 +18558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitGroup: 0
-  health: 10000
+  health: 100
   interactionTime: 0
   healthText: {fileID: 354590758}
   isPlayer: 1
@@ -39810,7 +39810,7 @@ MonoBehaviour:
     m_Bits: 0
   clickDamage: 10
   attackRadius: 2
-  maxAttackDistance: 5
+  maxAttackDistance: 2
   cooldownTime: 2
 --- !u!114 &1984641652
 MonoBehaviour:
@@ -39987,7 +39987,7 @@ MonoBehaviour:
   attackSpeed: 1
   moveSpeed: 3
   attackRadius: 2
-  maxAttackDistance: 5
+  maxAttackDistance: 2
   attackDamage: 10
   targetLayer:
     serializedVersion: 2

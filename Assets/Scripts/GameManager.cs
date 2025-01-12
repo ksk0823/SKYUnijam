@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public PoolManager pool;
@@ -99,6 +100,8 @@ public class GameManager : MonoBehaviour
         {
             // Big Angry Active
         }
+
+        CheckGameEnd();
     }
 
     void AddNewUnit()
@@ -118,10 +121,28 @@ public class GameManager : MonoBehaviour
         enemyNexus.GetComponent<SpriteRenderer>().sprite = NexusSprites[computerCharacterIndex];
     }
 
+    private void CheckGameEnd()
+    {
+        if (playerNexus.GetComponent<Nexus>().health <= 0)
+        {
+            EndGame();
+        }
+        else if (enemyNexus.GetComponent<Nexus>().health <= 0)
+        {
+            EndGame();
+        }
+    }
+
     private void EndGame()
     {
-        //_GameState = EGameState.End;
-        //_combatUI.ShowEndScreen(_scoreDict[EUnitGroup.Allay], _scoreDict[EUnitGroup.Enemy]);
+        if (playerNexus.GetComponent<Nexus>().health <= 0)
+        {
+            PlayerPrefs.SetInt("GameResult", 0);
+        } else if (enemyNexus.GetComponent<Nexus>().health <= 0)
+        {
+            PlayerPrefs.SetInt("GameResult", 1);
+        }
+        SceneManager.LoadScene("EndingScene");
         //_audioSource.Stop();
     }
 }

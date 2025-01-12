@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ReallyFinalScenes/SingleCombat.unity
     guid: 5a8b32adb54c47e46a9da5be7963c985
+  - enabled: 1
+    path: Assets/Scenes/ReallyFinalScenes/BackUp.unity
+    guid: c3ab7f5a51d73f64d8aa11fefa28816f
+  - enabled: 1
+    path: Assets/Scenes/ReallyFinalScenes/EndingScene.unity
+    guid: ffff96f54a424c4469a1e52fd1171db3
   m_configObjects: {}
